@@ -36,13 +36,27 @@ En esta primera versión del complemento he apostado por cuatro (04) aspectos fu
     <li><strong>Versatilidad</strong></li>
     Las interfaces de usuario han sido diseñadas para facilitar su uso al mismo tiempo que se explotan las capacidades del modelo, brindando diversas configuraciones las cuales se disponibilizan cuando es oportuno.<br>
     <li><strong>Compatibilidad</strong></li>
-    <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/logos.png" width=350></center>
+    <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/logos.png" width=350></center><br>
     <strong>GeoAI</strong> ha sido probado en los sistemas operativos Windows10 y 11, en las versiones de QGIS 3.10, 3.16, 3.22 y la última LTR 3.28.<br>
     <li><strong>Facil instalación y portabilidad</strong></li>
     El archivo del complemento es ligero pesa menos de 2 megabytes, sus requisitos de instalación son los minimos requeridos para utilizar el modelo SAM, como son: instalar PyTorch, descargar los archivos de los modelos pre-entrenados (checkpoints).<br>
     Puede descargar el archivo zip del plugin de este repositorio y luego instalarlo en QGIS con la opción Instalar emdiante Zip.<br>
 </ul>
 
+Sin embargo, hay aspectos mejorables, destacando:
+<ul>
+    <li>Completar la documentación</li>
+    <li>Traducri la interfaz y docuemntación al ingles y otros idiomas</li>
+    <li>Explorar en implementar las opciones de optimización que ofrece el moelo SAM, Python y PyQGIS</li>
+    <li>Añadir mayores funcionalidades</il>
+</ul>
 
+## Tabla de contenido
 
+- [Requerimientos](#Funcionalidad)
+- [Instalación](#Funcionalidad)
+    - [Procedimiento para descargar e instalar el plugin](#Funcionalidad)
+    - [Procedimiento para instalar PyTorch](Funcionalidad)
+ - [<b>Tutorial rapido</b>](#Funcionalidad)
+ - [Tutorial](#Funcionalidad)
 
