@@ -17,6 +17,9 @@ en el procesamiento de datos Geo-espaciales, comenzando con el modelo de segment
 imagen. Se ha entrenado con un conjunto de datos de 11 millones de imágenes y 1.100 millones de máscaras, 
 y ofrece un gran rendimiento en una gran variedad de tareas de segmentación Fuente [pagina del proyecto SAM](https://segment-anything.com/), 
 [repositorio github del proyecto SAM](https://github.com/facebookresearch/segment-anything)).
+
+Al utilizar el texto y codigo anadir a la cita:<br>
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8313393.svg)](https://doi.org/10.5281/zenodo.8313393)
 <hr></hr>
 
 
