@@ -27,6 +27,9 @@ Si deseas realizar una aporte a este desarrollo puedes enviarlo a la cuenta <str
 Escribir en la nota tu nombre y <i>"Contribution to the development of the GeoAI plugin"</i><br>
 <hr></hr>
 
+### Licencia
+El plugin esta bajo licencia: Licencia pública general de GNU v3.0
+
 ### ¿Qué ventajas tiene GeoAI para aplicar el modelo SAM?
 Si bien, <strong>GeoAI</strong> es un complemento en desarrollo, en esta primera versión he apostado por cuatro (04) aspectos fundamentales:
 <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/graf_caracte.png" width=350></center>
