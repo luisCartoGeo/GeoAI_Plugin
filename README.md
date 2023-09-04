@@ -47,14 +47,14 @@ Si bien, <strong>GeoAI</strong> es un complemento en desarrollo, en esta primera
     <strong>GeoAI</strong> ha sido probado en los sistemas operativos Windows10 y 11, en las versiones de QGIS 3.10, 3.16, 3.22 y la última LTR 3.28.<br>
     <li><strong>Facil instalación y portabilidad</strong></li>
     El archivo del complemento es ligero pesa menos de 2 megabytes, sus requisitos de instalación son los minimos requeridos para utilizar el modelo SAM, como son: instalar PyTorch, descargar los archivos de los modelos pre-entrenados (checkpoints).<br>
-    Puede descargar el archivo zip del plugin de este repositorio y luego instalarlo en QGIS con la opción Instalar emdiante Zip.<br>
+    Puede descargar el archivo zip del plugin de este repositorio y luego instalarlo en QGIS con la opción Instalar mediante Zip.<br>
 </ul>
 
 Sin embargo, hay aspectos mejorables, destacando:
 <ul>
     <li>Completar la documentación</li>
-    <li>Traducir la interfaz y docuemntación al ingles y otros idiomas</li>
-    <li>Explorar en implementar las opciones de optimización que ofrece el moelo SAM, Python y PyQGIS</li>
+    <li>Traducir la interfaz y documentación al ingles y otros idiomas</li>
+    <li>Explorar en implementar las opciones de optimización que ofrece el modelo SAM, Python y PyQGIS</li>
     <li>Añadir mayores funcionalidades</il>
 </ul>
 
