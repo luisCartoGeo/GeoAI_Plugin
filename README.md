@@ -17,11 +17,15 @@ en el procesamiento de datos Geo-espaciales, comenzando con el modelo de segment
 imagen. Se ha entrenado con un conjunto de datos de 11 millones de imágenes y 1.100 millones de máscaras, 
 y ofrece un gran rendimiento en una gran variedad de tareas de segmentación Fuente [pagina del proyecto SAM](https://segment-anything.com/), 
 [repositorio github del proyecto SAM](https://github.com/facebookresearch/segment-anything)).
-
-Al utilizar el texto y codigo anadir a la cita:<br>
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8313393.svg)](https://doi.org/10.5281/zenodo.8313393)
 <hr></hr>
 
+### Citas y aportes
+Al utilizar el texto y/o codigo añadir a la cita:<br>
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8313393.svg)](https://doi.org/10.5281/zenodo.8313393)
+
+Si deseas realizar una aporte a este desarrollo puedes enviarlo a la cuenta <strong>PayPal</strong>: luisepg3176@gmail.com<br>
+Escribir en la nota tu nombre y <i>"Contribution to the development of the GeoAI plugin"</i><br>
+<hr></hr>
 
 ### ¿Qué ventajas tiene GeoAI para aplicar el modelo SAM?
 Si bien, <strong>GeoAI</strong> es un complemento en desarrollo, en esta primera versión he apostado por cuatro (04) aspectos fundamentales:
