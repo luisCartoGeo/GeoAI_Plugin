@@ -77,12 +77,12 @@ class dialog_precarga(DialogUi, DialogType):
         self.icon_portada.setPixmap(iconportada)
         
         #----------------
-        self.opAvanzadas.clicked.connect(self.cambiarPagina)
-        iconavan=QIcon(os.path.join(self.dir,'icons','opAvanzadas.png'))
-        self.opAvanzadas.setIcon(iconavan)
-        self.opBasicas.clicked.connect(self.retornar)
-        iconbasicas=QIcon(os.path.join(self.dir,'icons','opBasicas.png'))
-        self.opBasicas.setIcon(iconbasicas)
+        #self.opAvanzadas.clicked.connect(self.cambiarPagina)
+        #iconavan=QIcon(os.path.join(self.dir,'icons','opAvanzadas.png'))
+        #self.opAvanzadas.setIcon(iconavan)
+        #self.opBasicas.clicked.connect(self.retornar)
+        #iconbasicas=QIcon(os.path.join(self.dir,'icons','opBasicas.png'))
+        #self.opBasicas.setIcon(iconbasicas)
         
         #listado de comboBox de Bandas
         self.lbandas=(self.bandR,self.bandG,self.bandB)
