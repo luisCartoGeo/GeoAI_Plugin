@@ -71,3 +71,13 @@ Sin embargo, hay aspectos mejorables, destacando:
  - [<b>Tutorial rapido</b>](#Funcionalidad)
  - [Tutorial](#Funcionalidad)
 
+# Requerimientos
+
+# Instalación
+## Procedimiento para instalar PyTorch
+## Procedimiento para descargar e instalar el plugin
+### Descarga del plugin
+El primer paso es descargar el complemento, el proceso es muy sencillo haces clic en el botón de color verde con el texto <strong>CODE</strong>, despliega un menú y seleccionas <strong>Download ZIP</strong> esto descargara un archivo zip el cual puedes utilizar directamente para instalar en QGIS. También puedes descargar el complemento desde la opción de Versión ubicado en la parte inferior derecha, descarga la última versión publicada.
+<center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/instal1.png" width=400></center>
+
+### Instalación del plugin
