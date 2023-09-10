@@ -78,7 +78,7 @@ Sin embargo, hay aspectos mejorables, destacando:
     - [Procedimiento para descargar e instalar el plugin](#Procedimiento-para-descargar-e-instalar-el-plugin)
       - [Descarga del plugin](#Descarga-del-plugin)
       - [Instalación del plugin](#Instalación-del-plugin)
-    - [Modelos pre-entrenados (check points)]()
+    - [Modelos pre entrenados (puntos de control o check points)](#Modelos-pre-entrenados-(puntos-de-control-o-check-points))
  - [<b>Tutorial rapido</b>](#Funcionalidad)
  - [Tutorial](#Funcionalidad)
 
@@ -209,3 +209,14 @@ Luego de descargado el Zip que contiene el plugin, puede activar el programa QGI
     <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/instal2.png" width=500></center>
     <li>Luego de instalado es recomendable reiniciar el programa QGIS, active la caja de dialogo Complementos, seleccione la etiqueta Instalado, encontrara el plugin GeoAI, activelo</li>
 </ol>
+
+## Modelos pre entrenados (puntos de control o check points)
+Para poder ejecutar SAM debemos descargar los puntos de control, los cuales son requeridos durante el proceso de pre-carga del modelo/imagen<br>
+Puedes descargar los puntos de control disponibles en los siguientes enlaces:
+<ul>
+    <li>Generalmente el más utilizado ```vit_h```: [modelo ViT-H SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth) </li>
+    <li>vit_l: [Modelo ViT-L SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) </li>
+    <li>vit_b: [Modelo ViT-B SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth) </li>
+</ul>
+
+
