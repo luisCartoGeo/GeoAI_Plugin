@@ -115,23 +115,25 @@ Como podra notar el proceso de pre-carga del modelo/imagen, es el proceso que he
  
 # Instalación
 ## Procedimiento para instalar PyTorch
-Realizar una adecuada instalación de PyTorch es el paso fundamental para utilizar el plugin sin mayores problemas. Para ello es nenecesario seleccionar la versión adecuada de PyTorch, a continuación se describe la instalación de PyTorch que he realizado en Windows10 y 11, para diferentes versiones de QGIS.<br>
-<strong>Un error común</strong> instalar la última versión de PyTorch desde la pagina oficial, si bien esta versión puede ejecutar el modelo SAM correctamente, las librerias pre-instaladas en QGIS no necesariamnete cubriran los requerimientos de esa versión de PyTorch, por ejemplo, la versión de Numpy preinstalada<br>
+Realizar una adecuada instalación de PyTorch es el paso fundamental para utilizar el plugin sin mayores problemas. Para ello es necesario seleccionar la versión adecuada de PyTorch, a continuación se describe la instalación de PyTorch que he realizado en Windows10 y 11, para diferentes versiones de QGIS.<br>
+<strong>Un error común</strong> instalar la última versión de PyTorch desde la pagina oficial, si bien esta versión puede ejecutar el modelo SAM correctamente, las librerias pre-instaladas en QGIS no necesariamente cubriran los requerimientos de esa versión de PyTorch, por ejemplo, la versión de Numpy pre-instalada<br>
 ### Forma de instalación
-Realizaremos la instalación dese el shell de OSGEO utilizando pip. El shell de OSGEO es la ventana de comendos (CMD) instalada con QGIS por la cual podemos realizar instalaciones de librerias y otras tareas<br>
+Realizaremos la instalación desde el shell de OSGEO utilizando pip. El shell de OSGEO es la ventana de comandos (CMD) instalada con QGIS mediante ella podemos realizar instalaciones de librerias y otras tareas<br>
 <strong>¿Como acceder al shell de OSGEO? </strong><br>
-Dirijase al icono de windows ubicado en la esquina inferior izquierda esto desplegara una lista de todos los programas, seleccione la carpeta que corresponde a su instalación de QGIS. Luego seleccione OSGEO4wShell como se muestra en la imagen<br>
+Dirijase al icono de windows ubicado en la esquina inferior izquierda esto desplegara una lista de todos los programas, seleccione la carpeta que corresponde a su instalación de QGIS. Luego seleccione OSGeo4wShell como se muestra en la imagen<br>
 <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/shell.png" width=400></center><br>
-Esto desplegara la ventana MSDOS donde introduciremos el codigo de instalación<br>
+Esto desplegara la ventana MS DOS donde introduciremos el codigo de instalación<br>
 
 ### Procedimiento de instalación de PyTorch con PIP
 #### 1.-  Verifique el entorno de trabajo
 Antes proceder a instalar cualquier libreria Python debemos verificar si se requiere configurar el entorno de trabajo. <br>
 Las versiones antiguas de QGIS, incluyendo la 3.16 debemos introducir el siguiente codigo para que la instalación de la libreria se realice adecuadamente, sin embargo, para las nuevas versiones no es necesario. <br>
-Introduzca el siguiente codigo en el shell, independiente el resultado que devuelva el shell prosiga con los siguientes pasos
+
 ```
 py3_env
 ```
+Introduzca el siguiente codigo en el shell, independiente el resultado que devuelva el shell prosiga con los siguientes pasos
+
 #### 2.- Actualizar pip
 ```
 python -m pip install -U pip
