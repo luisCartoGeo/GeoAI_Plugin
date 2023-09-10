@@ -127,7 +127,7 @@ Realizar una adecuada instalación de PyTorch es el paso fundamental para utiliz
 Realizaremos la instalación desde el shell de OSGEO utilizando pip. El shell de OSGEO es la ventana de comandos (CMD) instalada con QGIS mediante ella podemos realizar instalaciones de librerias y otras tareas<br>
 <strong>¿Como acceder al shell de OSGEO? </strong><br>
 Dirijase al icono de windows ubicado en la esquina inferior izquierda esto desplegara una lista de todos los programas, seleccione la carpeta que corresponde a su instalación de QGIS. Luego seleccione OSGeo4wShell como se muestra en la imagen<br>
-<center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/shell.png" width=400></center><br>
+<center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/shell.png" width=800></center><br>
 Esto desplegara la ventana MS DOS donde introduciremos el codigo de instalación<br>
 
 ### Procedimiento de instalación de PyTorch con PIP
@@ -214,8 +214,7 @@ Luego de descargado el Zip que contiene el plugin, puede activar el programa QGI
 Para poder ejecutar SAM debemos descargar los puntos de control, los cuales son requeridos durante el proceso de pre-carga del modelo/imagen<br>
 Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br><br>
 
-    1.- Generalmente el más utilizado vit_h: ([modelo ViT-H SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth))<br>
-    2.- vit_l: [Modelo ViT-L SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)<br>
-    3.- vit_b: [Modelo ViT-B SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)<br><br>
-
+1. Generalmente el más utilizado vit_h: ([modelo ViT-H SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth))<br>
+2. vit_l: [Modelo ViT-L SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)<br>
+3. vit_b: [Modelo ViT-B SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)<br><br>
 
