@@ -81,3 +81,10 @@ El primer paso es descargar el complemento, el proceso es muy sencillo haces cli
 <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/instal1.png" width=400></center>
 
 ### Instalación del plugin
+Luego de descargado el Zip que contiene el plugin, puede activar el programa QGIS y realizar los siguientes pasos:
+<ol>
+    <li>Seleccione el menú complementos, luego "Administrar e instalar complementos"</li>
+    <li>En la ventana que se despliega seleccione la etiqueta "Instalar a partir de Zip" ubicada en el panel de la izquierda</li>
+    <li>Seleccione el botón a la derecha con tres puntos, le permitira ubicar el archivo Zip en su coputador, luego clic sobre el botón "Instalar complemento"</li>
+    <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/instal2.png" width=400></center>
+</ol>
