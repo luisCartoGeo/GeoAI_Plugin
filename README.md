@@ -197,7 +197,7 @@ Deberas aceptar cuando te pregunte si estas seguro de desinstalar<br>
 
 ## Procedimiento para descargar e instalar el plugin
 ### Descarga del plugin
-El primer paso es descargar el complemento, el proceso es muy sencillo haces clic en el botón de color verde con el texto <strong>CODE</strong>, despliega un menú y seleccionas <strong>Download ZIP</strong> esto descargara un archivo zip el cual puedes utilizar directamente para instalar en QGIS. También puedes descargar el complemento desde la opción de Versión ubicado en la parte inferior derecha, descarga la última versión publicada.
+El primer paso es descargar el complemento, el proceso es muy sencillo haces clic en el botón de color verde con el texto <strong>CODE</strong>, despliega un menú y seleccionas <strong>Download ZIP</strong> esto descargara un archivo zip el cual puedes utilizar directamente para instalar en QGIS. También puedes descargar el complemento desde la opción de Versión ubicado en la parte inferior derecha, descarga la última versión publicada.<br>
 <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/instal1.png" width=500></center>
 
 ### Instalación del plugin
@@ -212,12 +212,10 @@ Luego de descargado el Zip que contiene el plugin, puede activar el programa QGI
 
 ## Modelos pre entrenados (puntos de control o check points)
 Para poder ejecutar SAM debemos descargar los puntos de control, los cuales son requeridos durante el proceso de pre-carga del modelo/imagen<br>
-Puedes descargar los puntos de control disponibles en los siguientes enlaces:
-[pagina del proyecto SAM] (https://segment-anything.com/),
-<ul>
-    <li>Generalmente el más utilizado vit_h: [modelo ViT-H SAM] (https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth) </li>
-    <li>vit_l: [Modelo ViT-L SAM] (https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) </li>
-    <li>vit_b: [Modelo ViT-B SAM] (https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth) </li>
-</ul>
+Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br><br>
+
+1.- Generalmente el más utilizado vit_h: ([modelo ViT-H SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth))
+2.- vit_l: [Modelo ViT-L SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)
+3.- vit_b: [Modelo ViT-B SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)
 
 
