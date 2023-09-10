@@ -63,22 +63,62 @@ Sin embargo, hay aspectos mejorables, destacando:
 
 ## Tabla de contenido
 
-- [Requerimientos](#Funcionalidad)
-- [Instalación](#Funcionalidad)
-    - [Procedimiento para descargar e instalar el plugin](#Funcionalidad)
+- [Requerimientos](#Requerimientos)
+    - [Requerimientos de instalación](#Requerimientos_de_instalación)
+    - [Requerimientos de Hadware](#Requerimientos_de_Hadware)
+    - [Recomendaciones para un mejor uso del plugin](#Recomendaciones_para_un_mejor_uso_del_plugin)
+- [Instalación](#Instalación)
     - [Procedimiento para instalar PyTorch](Funcionalidad)
+    - [Procedimiento para descargar e instalar el plugin](#Funcionalidad)
+      - [Descarga del plugin](#Descarga_del_plugin)
+      - [Instalación del plugin](#Instalación_del_plugin)
     - [Modelos pre-entrenados (check points)]()
  - [<b>Tutorial rapido</b>](#Funcionalidad)
  - [Tutorial](#Funcionalidad)
 
 # Requerimientos
+## Requerimientos de instalación
+<strong>GeoAI</strong> esta diseñado para minimizar los requsistos de instalación. Para utilizar el plugin solo debe cubrir dos requerimientos:<br>
+<ol>
+    <li>Instalar la versión <strong>adecuada</strong> de la libreria PyTorch</li>
+    <li>Descargar y colocar en una directorio accesible los puntos de control (Check Points) del modelo SAM</li>
+</ol>
 
+## Requerimientos de Hadware
+SAM es un modelo de redes neuronales NLP densamente entrenado (11 millones de imagenes), por lo cual, los puntos de control son archivos de +/- 2 Gb. Estos modelos presentan un alto consumo de memoria RAM y capacidad de procesamiento.<br>
+Sin embargo, esto no restringe el uso en equipos de menores prestaciones, pero evidentemente el proceso tomara más tiempo. <br><br>
+<strong>¿Cuales partes del proceso requieren mayor procesamiento, por lo tanto, demoran más?</strong><br>
+<ol>
+    <li>El proceso de pre-carga del modelo/imagen</li>
+    <li>El proceso de segmentar toda la imagen, especialmente si se incrementa la densidad de puntos de muestreo</li>
+</ol>
+Como podra notar el proceso de pre-carga del modelo/imagen, es el proceso que he encontrado más demandante de recursos, para dar un ejemplo claro, describire cuanto demora el proceso para la misma imagen en los dos equipos en los que lo he probado:
+<ol>
+    <li><strong>Procesador</strong>: AMD Ryzen 3 3200U</li>
+    <STRONG>Tarjeta de video</STRONG> Radeon Vega Mobile Fx 2.6 Gb<br>
+    <strong>Memoria RAM</strong>: 8 Gb<br>
+    <strong>Disco duro</strong>: aplicaciones SSD, <STRONG>Almacenamiento</strong>: HDD nota aqui se encuentran los puntos de control<br>
+    <strong>Duración proceso de precarga modelo/imagen:</strong> +/- 20 minutos<br><br>
+    <li><strong>Procesador</strong>: intel i5-12500H </li>
+    <STRONG>Tarjeta de video</STRONG> Ge Force RTX3050TI<br>
+    <strong>Memoria RAM</strong>: 16 Gb<br>
+    <strong>Disco duro</strong> SSD nota aqui se encuentran los puntos de control<br>
+     <strong>Duración proceso de precarga modelo/imagen:</strong> +/- 2 minutos<br>
+</ol>
+
+## Recomendaciones para un mejor uso del plugin
+<ul>
+    <li>Mantener lo más libre posible la RAM al realizar la pre-carga, cierre todas las otras aplicaciones</li>
+    <li>Ubique los check points en el disco solido (SSD) si lo posee</li>
+    <li>Deje trabajar el equipo mientras se realiza el proceso de pre-carga</li>
+</ul>
+ 
 # Instalación
 ## Procedimiento para instalar PyTorch
 ## Procedimiento para descargar e instalar el plugin
 ### Descarga del plugin
 El primer paso es descargar el complemento, el proceso es muy sencillo haces clic en el botón de color verde con el texto <strong>CODE</strong>, despliega un menú y seleccionas <strong>Download ZIP</strong> esto descargara un archivo zip el cual puedes utilizar directamente para instalar en QGIS. También puedes descargar el complemento desde la opción de Versión ubicado en la parte inferior derecha, descarga la última versión publicada.
-<center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/instal1.png" width=400></center>
+<center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/instal1.png" width=500></center>
 
 ### Instalación del plugin
 Luego de descargado el Zip que contiene el plugin, puede activar el programa QGIS y realizar los siguientes pasos:
@@ -86,5 +126,6 @@ Luego de descargado el Zip que contiene el plugin, puede activar el programa QGI
     <li>Seleccione el menú complementos, luego "Administrar e instalar complementos"</li>
     <li>En la ventana que se despliega seleccione la etiqueta "Instalar a partir de Zip" ubicada en el panel de la izquierda</li>
     <li>Seleccione el botón a la derecha con tres puntos, le permitira ubicar el archivo Zip en su coputador, luego clic sobre el botón "Instalar complemento"</li>
-    <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/instal2.png" width=400></center>
+    <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/instal2.png" width=500></center>
+    <li>Luego de instalado es recomendable reiniciar el programa QGIS, active la caja de dialogo Complementos, seleccione la etiqueta Instalado, encontrara el plugin GeoAI, activelo</li>
 </ol>
