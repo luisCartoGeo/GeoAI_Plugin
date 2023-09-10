@@ -214,8 +214,8 @@ Luego de descargado el Zip que contiene el plugin, puede activar el programa QGI
 Para poder ejecutar SAM debemos descargar los puntos de control, los cuales son requeridos durante el proceso de pre-carga del modelo/imagen<br>
 Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br><br>
 
-1.- Generalmente el más utilizado vit_h: ([modelo ViT-H SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth))
-2.- vit_l: [Modelo ViT-L SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)
-3.- vit_b: [Modelo ViT-B SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)
+    1.- Generalmente el más utilizado vit_h: ([modelo ViT-H SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth))<br>
+    2.- vit_l: [Modelo ViT-L SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)<br>
+    3.- vit_b: [Modelo ViT-B SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)<br><br>
 
 
