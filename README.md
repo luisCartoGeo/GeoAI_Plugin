@@ -68,7 +68,13 @@ Sin embargo, hay aspectos mejorables, destacando:
     - [Requerimientos de Hadware](#Requerimientos-de-Hadware)
     - [Recomendaciones para un mejor uso del plugin](#Recomendaciones-para-un-mejor-uso-del-plugin)
 - [Instalación](#Instalación)
-    - [Procedimiento para instalar PyTorch](Funcionalidad)
+    - [Procedimiento para instalar PyTorch](#Procedimiento-para-instalar-PyTorch)
+      - [Forma de instalación](#Forma_de_instalación)
+      - [Procedimiento de instalación de PyTorch con PIP](#Procedimiento-de-instalación-de-PyTorch-con-PIP)
+        - [1. Verifique el entorno de trabajo](#1.-Verifique-el-entorno-de-trabajo)
+        - [2. Actualizar pip](#2.-Actualizar-pip)
+        - [3. Seleccione la versión adecuada de PyTorch para su equipo](#3.-Seleccione-la-versión-adecuada-de-PyTorch-para-su-equipo)
+    - [Corrigiendo una instalación previa](#Corrigiendo-una-instalación-previa)
     - [Procedimiento para descargar e instalar el plugin](#Procedimiento-para-descargar-e-instalar-el-plugin)
       - [Descarga del plugin](#Descarga-del-plugin)
       - [Instalación del plugin](#Instalación-del-plugin)
@@ -125,7 +131,7 @@ Dirijase al icono de windows ubicado en la esquina inferior izquierda esto despl
 Esto desplegara la ventana MS DOS donde introduciremos el codigo de instalación<br>
 
 ### Procedimiento de instalación de PyTorch con PIP
-#### 1.-  Verifique el entorno de trabajo
+#### 1. Verifique el entorno de trabajo
 Antes proceder a instalar cualquier libreria Python debemos verificar si se requiere configurar el entorno de trabajo. <br>
 Las versiones antiguas de QGIS, incluyendo la 3.16 debemos introducir el siguiente codigo para que la instalación de la libreria se realice adecuadamente, sin embargo, para las nuevas versiones no es necesario. <br>
 
@@ -134,7 +140,7 @@ py3_env
 ```
 Introduzca el siguiente codigo en el shell, independiente el resultado que devuelva el shell prosiga con los siguientes pasos
 
-#### 2.- Actualizar pip
+#### 2. Actualizar pip
 ```
 python -m pip install -U pip
 ```
@@ -142,7 +148,7 @@ Si esta en una versión muy antigua de QGIS y el codigo anterior arroja error ut
 ```
 python -m pip install --upgrade pip
 ```
-#### 3.- Seleccione la versión adecuada de PyTorch para su equipo
+#### 3. Seleccione la versión adecuada de PyTorch para su equipo
 Las especificaciones del modelo SAM señalan que se requiere como minimo python>=3.8, pytorch>=1.7 y torchvision>=0.8. <br>
 En teoria la versión de Python limita la versión QGIS donde podriamos instalar y ejecutar el modelo, sin embargo, me ha funcionado bien en QGIS 3.10 cuya versión es Python 3.7. Por lo tanto, cualquier versión de QGIS igual o superior a la 3.10 es posible utilizar el plugin.<br>
 
@@ -164,7 +170,7 @@ En ese caso introduce este código<br>
 pip3 install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio===0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
-2.- Otros procesadores y tarjetas de video
+2.- Otros procesadores y tarjetas de video<br>
 Utiliza el siguiente codigo, en este caso utilizaras el modelo SAM solo con la opción CPU (no te preocupes hasta ahora solo la he utilizado de esta forma)<br>
     
 ``` 
@@ -181,7 +187,8 @@ Introduce este codigo debe devolverte información de la liberia instalada<br>
 Otra opción, abre QGIS activa la consola de Python ejecuta import torch si no devuelve nada, esta instalada<br>
 
 ### Corrigiendo una instalación previa
-Si realizaste una instalación de PyTorch que no te permite ejecutar el plugin deberas removerla y reemplazarla por las recomendadas aqui. Puede sremoverla utilizando pip, asegurate de incluir todo lo instalado previamente, entre ello   torchvision y torchaudio<br>
+Si realizaste una instalación de PyTorch que no te permite ejecutar el plugin deberas removerla y reemplazarla por las recomendadas aqui.<br> 
+Puedes removerla utilizando pip, asegurate de incluir todo lo instalado previamente, entre ello   torchvision y torchaudio<br>
 Para desinstalar las versiones aqui recomendadas repite desde el paso 1 e introduce el siguiente codigo<br>
 ``` 
 pip3 uninstall torch torchvision torchaudio
