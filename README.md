@@ -115,6 +115,77 @@ Como podra notar el proceso de pre-carga del modelo/imagen, es el proceso que he
  
 # Instalación
 ## Procedimiento para instalar PyTorch
+Realizar una adecuada instalación de PyTorch es el paso fundamental para utilizar el plugin sin mayores problemas. Para ello es nenecesario seleccionar la versión adecuada de PyTorch, a continuación se describe la instalación de PyTorch que he realizado en Windows10 y 11, para diferentes versiones de QGIS.<br>
+<strong>Un error común</strong> instalar la última versión de PyTorch desde la pagina oficial, si bien esta versión puede ejecutar el modelo SAM correctamente, las librerias pre-instaladas en QGIS no necesariamnete cubriran los requerimientos de esa versión de PyTorch, por ejemplo, la versión de Numpy preinstalada<br>
+### Forma de instalación
+Realizaremos la instalación dese el shell de OSGEO utilizando pip. El shell de OSGEO es la ventana de comendos (CMD) instalada con QGIS por la cual podemos realizar instalaciones de librerias y otras tareas<br>
+<strong>¿Como acceder al shell de OSGEO? </strong><br>
+Dirijase al icono de windows ubicado en la esquina inferior izquierda esto desplegara una lista de todos los programas, seleccione la carpeta que corresponde a su instalación de QGIS. Luego seleccione OSGEO4wShell como se muestra en la imagen<br>
+<center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/shell.png" width=400></center><br>
+Esto desplegara la ventana MSDOS donde introduciremos el codigo de instalación<br>
+
+### Procedimiento de instalación de PyTorch con PIP
+#### 1.-  Verifique el entorno de trabajo
+Antes proceder a instalar cualquier libreria Python debemos verificar si se requiere configurar el entorno de trabajo. <br>
+Las versiones antiguas de QGIS, incluyendo la 3.16 debemos introducir el siguiente codigo para que la instalación de la libreria se realice adecuadamente, sin embargo, para las nuevas versiones no es necesario. <br>
+Introduzca el siguiente codigo en el shell, independiente el resultado que devuelva el shell prosiga con los siguientes pasos
+```
+py3_env
+```
+#### 2.- Actualizar pip
+```
+python -m pip install -U pip
+```
+Si esta en una versión muy antigua de QGIS y el codigo anterior arroja error utilice este<br>
+```
+python -m pip install --upgrade pip
+```
+#### 3.- Seleccione la versión adecuada de PyTorch para su equipo
+Las especificaciones del modelo SAM señalan que se requiere como minimo python>=3.8, pytorch>=1.7 y torchvision>=0.8. <br>
+En teoria la versión de Python limita la versión QGIS donde podriamos instalar y ejecutar el modelo, sin embargo, me ha funcionado bien en QGIS 3.10 cuya versión es Python 3.7. Por lo tanto, cualquier versión de QGIS igual o superior a la 3.10 es posible utilizar el plugin.<br>
+
+La instalación de PyTorch dependera de las especificaciones de tu equipo:<br>
+
+1.- Procesador Intel con tarjeta gráfica Nvidia</li>
+    Para un uso adecuado de la GPU deberas verificar la versión de tu driver Nvidia:<br><br>
+a.- Para utilizar CUDA 10.2, la versión del Driver Nvidia debe ser >= 441.22<br>
+En ese caso introduce este código<br>
+    
+```                                   
+pip3 install torch==1.8.1+cu102 torchvision==0.9.1+cu102 torchaudio===0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+b.-  Para utilizar CUDA 11.1, la versión del Driver Nvidia debe ser >= 456.38<br>
+En ese caso introduce este código<br>
+        
+``` 
+pip3 install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio===0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+2.- Otros procesadores y tarjetas de video
+Utiliza el siguiente codigo, en este caso utilizaras el modelo SAM solo con la opción CPU (no te preocupes hasta ahora solo la he utilizado de esta forma)<br>
+    
+``` 
+pip3 install torch==1.8.1+cpu torchvision==0.9.1+cpu torchaudio===0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+```
+    
+3.- Verifica la instalación de PyTorch
+Introduce este codigo debe devolverte información de la liberia instalada<br>
+    
+    ``` 
+    pip3 show torch
+    ``` 
+    
+Otra opción, abre QGIS activa la consola de Python ejecuta import torch si no devuelve nada, esta instalada<br>
+
+### Corrigiendo una instalación previa
+Si realizaste una instalación de PyTorch que no te permite ejecutar el plugin deberas removerla y reemplazarla por las recomendadas aqui. Puede sremoverla utilizando pip, asegurate de incluir todo lo instalado previamente, entre ello   torchvision y torchaudio<br>
+Para desinstalar las versiones aqui recomendadas repite desde el paso 1 e introduce el siguiente codigo<br>
+``` 
+pip3 uninstall torch torchvision torchaudio
+``` 
+Deberas aceptar cuando te pregunte si estas seguro de desinstalar<br>
+
 ## Procedimiento para descargar e instalar el plugin
 ### Descarga del plugin
 El primer paso es descargar el complemento, el proceso es muy sencillo haces clic en el botón de color verde con el texto <strong>CODE</strong>, despliega un menú y seleccionas <strong>Download ZIP</strong> esto descargara un archivo zip el cual puedes utilizar directamente para instalar en QGIS. También puedes descargar el complemento desde la opción de Versión ubicado en la parte inferior derecha, descarga la última versión publicada.
