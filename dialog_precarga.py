@@ -123,7 +123,7 @@ class dialog_precarga(DialogUi, DialogType):
                 nombre_modelo='vit_h'
             elif nf=='sam_vit_l_0b3195.pth':
                 nombre_modelo='vit_l'
-            elif nf==' sam_vit_b_01ec64.pth':
+            elif nf=='sam_vit_b_01ec64.pth':
                 nombre_modelo='vit_b'
             else:
                 nombre_modelo=self.nmodelo.currentText()
