@@ -23,7 +23,7 @@ from qgis.PyQt.QtCore import Qt, QSize
 from qgis.PyQt import QtGui
 from qgis.PyQt.QtGui import QIcon, QPixmap
 from qgis.PyQt import QtWidgets
-from qgis.PyQt.QtWidgets import QFileDialog, QComboBox
+from qgis.PyQt.QtWidgets import QFileDialog, QComboBox, QProgressBar, QMessageBox
 from qgis.core import (Qgis, QgsMapLayer, QgsRasterLayer, QgsProject, QgsMapLayerType)
 #modulos de sam
 from .segment_anything import *
