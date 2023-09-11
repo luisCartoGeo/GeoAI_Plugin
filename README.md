@@ -65,7 +65,7 @@ Sin embargo, hay aspectos mejorables, destacando:
 
 - [Requerimientos](#Requerimientos)
     - [Requerimientos de instalación](#Requerimientos-de-instalación)
-    - [Requerimientos de Hadware](#Requerimientos-de-Hadware)
+    - [Requerimientos de Hardware](#Requerimientos-de-Hardware)
     - [Recomendaciones para un mejor uso del plugin](#Recomendaciones-para-un-mejor-uso-del-plugin)
 - [Instalación](#Instalación)
     - [Procedimiento para instalar PyTorch](#Procedimiento-para-instalar-PyTorch)
@@ -90,7 +90,7 @@ Sin embargo, hay aspectos mejorables, destacando:
     <li>Descargar y colocar en una directorio accesible los puntos de control (Check Points) del modelo SAM</li>
 </ol>
 
-## Requerimientos de Hadware
+## Requerimientos de Hardware
 SAM es un modelo de redes neuronales NLP densamente entrenado (11 millones de imagenes), por lo cual, los puntos de control son archivos de +/- 2 Gb. Estos modelos presentan un alto consumo de memoria RAM y capacidad de procesamiento.<br>
 Sin embargo, esto no restringe el uso en equipos de menores prestaciones, pero evidentemente el proceso tomara más tiempo. <br><br>
 <strong>¿Cuales partes del proceso requieren mayor procesamiento, por lo tanto, demoran más?</strong><br>
