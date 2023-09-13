@@ -273,9 +273,9 @@ class dialog_precarga(DialogUi, DialogType):
                 lf=lambda x: av*x+b
                 result = lf(bac).astype(np.uint8)
                 #convertimos a int
-                lbands.append(bac)
-                lbands.append(bac.copy())
-                lbands.append(bac.copy())
+                lbands.append(result)
+                lbands.append(result.copy())
+                lbands.append(result.copy())
             else:
                 lbands.append(ba)
                 lbands.append(ba.copy())
