@@ -187,18 +187,18 @@ def crear_capa_mayor_atrib(dic,epsg):
                 else:
                     #print('solo una geometria',lgeo)
                     list_geo.append(lgeo[0])
-        camp = QgsField(ncampo, QVariant.String)
-        provider.addAttributes([camp])
-        salida.triggerRepaint()
-        salida.updateFields()
-        lfeatures=[]
-        for i in list_geo:
-            f=QgsFeature()
-            f.setFields(salida.fields())
-            f.setGeometry(i)
-            f.setAttribute(ncampo, valor)
-            lfeatures.append(f)
-        provider.addFeatures(lfeatures)
+            camp = QgsField(ncampo, QVariant.String)
+            provider.addAttributes([camp])
+            salida.triggerRepaint()
+            salida.updateFields()
+            lfeatures=[]
+            for i in list_geo:
+                f=QgsFeature()
+                f.setFields(salida.fields())
+                f.setGeometry(i)
+                f.setAttribute(ncampo, valor)
+                lfeatures.append(f)
+            provider.addFeatures(lfeatures)
         return salida
     else:
         return None
