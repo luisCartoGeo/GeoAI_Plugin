@@ -246,6 +246,7 @@ class dialog_digitalizacion(DialogUi, DialogType):
         self.barea.setStyleSheet(stylesheet)
         self.bpunto.setStyleSheet(stylesheet)
         self.ejecutar.clicked.connect(self.procesar)
+        self.pushButton_2.clicked.connect(self.cerrar)
     
     def btnstate(self,b):
         if self.sender().objectName()=='op_unsegment':
@@ -427,6 +428,11 @@ class dialog_digitalizacion(DialogUi, DialogType):
         or len(self.dicAreas)>0 or len(self.dicPuntos)>0:
             #or len(self.dicPuntos)>0:
             self.procesar()
+         
+    def cerrar(self):
+        self.pry.layersWillBeRemoved.disconnect(self.capaRemovida)
+        self.pry.layersAdded.disconnect(self.capaAdicionada)
+        self.close()
                 
     def procesar(self):
         progressMessageBar = self.iface.messageBar().createMessage("El proceso de carga tomara varios minutos...")
