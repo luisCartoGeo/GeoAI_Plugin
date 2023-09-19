@@ -68,12 +68,12 @@ class dialog_precarga(DialogUi, DialogType):
         #lista de capas
         self.listaRaster=listaRaster
         #icono de la ventana
-        rutaiconv= os.path.join(self.dir,'icons//segnenti.png')
+        rutaiconv= os.path.join(self.dir,'icon.png')
         iconv=QIcon(rutaiconv)
         self.setWindowIcon(iconv)
 
         #imagen portada
-        iconportada= QPixmap(os.path.join(self.dir,'fondoimagen.png'))
+        iconportada= QPixmap(os.path.join(self.dir,'fondonegro.png'))
         self.icon_portada.setPixmap(iconportada)
         
         #----------------
