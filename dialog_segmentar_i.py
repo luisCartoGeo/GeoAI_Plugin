@@ -70,7 +70,7 @@ class dialog_segmentar_i(DialogUi, DialogType):
         self.param=parametros
         
         #imagen portada
-        iconportada= QPixmap(os.path.join(self.dir,'icons','fondoSegmt2.png'))
+        iconportada= QPixmap(os.path.join(self.dir,'fondorojo.png'))
         self.icon_portada.setPixmap(iconportada)
 
         #icono de la ventana
@@ -92,6 +92,7 @@ class dialog_segmentar_i(DialogUi, DialogType):
         time.sleep(1)
         self.iface.messageBar().pushWidget(progressMessageBar, Qgis.Info)
         progress.setValue(10)
+        self.cerrar()    #cerramos el dialogo para evitar que el usuario ejecute de nuevo por equivocacion
         
         if self.defecto.isChecked():
             time.sleep(1)
