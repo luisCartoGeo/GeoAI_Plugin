@@ -148,7 +148,7 @@ class dialog_digitalizacion(DialogUi, DialogType):
         self.listaVector=listaVector
         
         #imagen portada
-        iconportada= QPixmap(os.path.join(self.dir,'icons','fondigi.png'))
+        iconportada= QPixmap(os.path.join(self.dir,'fondoimagen.png'))
         self.icon_portada.setPixmap(iconportada)
 
         #icono de la ventana
