@@ -77,8 +77,11 @@ class dialog_segmentar_i(DialogUi, DialogType):
         rIdigi= os.path.join(self.dir,'icons//icoboton2.png')
         iconv=QIcon(rIdigi)
         self.setWindowIcon(iconv)
-        
+        self.cancelar.clicked.connect(self.cerrar)
         self.ejecutar.clicked.connect(self.procesar)
+     
+    def cerrar(self):
+        self.close()
         
     def procesar(self):
         progressMessageBar = self.iface.messageBar().createMessage("El proceso de carga tomara varios minutos...")
@@ -88,6 +91,7 @@ class dialog_segmentar_i(DialogUi, DialogType):
         progressMessageBar.layout().addWidget(progress)
         time.sleep(1)
         self.iface.messageBar().pushWidget(progressMessageBar, Qgis.Info)
+        progress.setValue(10)
         
         if self.defecto.isChecked():
             time.sleep(1)
@@ -110,7 +114,7 @@ class dialog_segmentar_i(DialogUi, DialogType):
             #carpeta temporal
             if len(lmask)==0:
                 self.iface.messageBar().pushMessage('ERROR',\
-                '<b>No se genraron segmentos</b>', level=0, duration=7)
+                '<b>No se generaron segmentos</b>', level=0, duration=7)
                 ms = QMessageBox()
                 ms.setText("Error en el proceso. No se generaron segmentos")
                 ms.setIcon(QMessageBox.Warning)
@@ -152,6 +156,7 @@ class dialog_segmentar_i(DialogUi, DialogType):
         else:
             time.sleep(1)
             progressMessageBar.setText('Procesando segmentacion')
+            progress.setValue(20)
             #parametros
             predictor=self.param.predictor
             sam=self.param.sam
