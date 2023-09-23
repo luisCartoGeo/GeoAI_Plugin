@@ -328,7 +328,7 @@ class dialog_digitalizacion(DialogUi, DialogType):
         self.cargarCampos(capa)
         
     def cargarCampos(self,capa):
-        if not capa is None:
+        if type(capa)==QgsVectorLayer:
             campos=capa.fields()
             if not campos.isEmpty():
                 for f in campos:
