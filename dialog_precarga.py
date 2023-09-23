@@ -336,15 +336,16 @@ class dialog_precarga(DialogUi, DialogType):
                     
     def cambioCapa(self):
         imagen=self.listImagen.currentData()
-        nbandas=imagen.bandCount()
-        if nbandas==1:
-            for i in self.lbandas:
-                i.setEnabled(False)
-        else:
-            for i in self.lbandas:
-                i.clear()
-                i.setEnabled(True)
-                i.addItems([str(i) for i in range(1,nbandas+1)])
+        if type(imagen)==QgsRasterLayer:
+            nbandas=imagen.bandCount()
+            if nbandas==1:
+                for i in self.lbandas:
+                    i.setEnabled(False)
+            else:
+                for i in self.lbandas:
+                    i.clear()
+                    i.setEnabled(True)
+                    i.addItems([str(i) for i in range(1,nbandas+1)])
             
     def cerrar(self):
         self.pry.layersWillBeRemoved.disconnect(self.capaRemovida)
