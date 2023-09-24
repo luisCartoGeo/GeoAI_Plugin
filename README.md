@@ -82,7 +82,7 @@ Sin embargo, hay aspectos mejorables, destacando:
  - [<b>Tutorial rapido</b>](#Funcionalidad)
     - [Segmentación Interactiva](#Segementación_Interactiva)
     - [Extracción y conteo de hileras y plantas](#Extracción_y_conteo_de_hileras_y_plantas)
-    - [Extracción de zonas de cultivo y araes de riego](#Extracción_de_zonas_de_cultivo_y_areas_de_riego)
+    - [Extracción de zonas de cultivo y areas de riego](#Extracción_de_zonas_de_cultivo_y_areas_de_riego)
  - [Tutorial](#Funcionalidad)
 
 # Requerimientos
@@ -225,5 +225,5 @@ Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br
    - [Enlace Video](https://youtu.be/TXPBrG-KUzg?si=TuzZuP90piUy0eot)<br>
 
 ## Extracción y conteo de hileras y plantas
-## Extracción de zonas de cultivo y araes de riego
+## Extracción de zonas de cultivo y areas de riego
 
