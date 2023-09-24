@@ -218,7 +218,7 @@ Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br
 1. Generalmente el más utilizado vit_h: ([modelo ViT-H SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth))<br>
 2. vit_l: [Modelo ViT-L SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)<br>
 3. vit_b: [Modelo ViT-B SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)<br>
-
+4. test: [Enlace Video](https://youtu.be/TXPBrG-KUzg?si=TuzZuP90piUy0eot)<br>
 # Tutorial rapido
 ## Segmentación Interactiva
 <br>
