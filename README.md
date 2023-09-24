@@ -220,5 +220,5 @@ Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br
 3. vit_b: [Modelo ViT-B SAM](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)<br><br>
 # Tutorial rapido
 ## Segmentación Interactiva
-[![](https://markdown-videos.deta.dev/youtube/NarBox1LkYc)](https://youtu.be/TXPBrG-KUzg)
+[![](https://markdown-videos.deta.dev/youtube/NarBox1LkYc)](https://youtu.be/TXPBrG-KUzg)](https://youtu.be/TXPBrG-KUzg?si=ZpqKLEV-ER0vPuyy)
 
