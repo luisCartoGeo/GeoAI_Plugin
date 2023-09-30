@@ -1,0 +1,11 @@
+[general]
+name=GeoAI
+description=Complemento de QGIS cuyo fin es implementar el modelo de segmentación de imagenes SAM desarrollado por META en datos geoespaciales, en la interfaz de QGIS.
+about=https://www.linkedin.com/in/luisedpg/.
+version=1.0
+qgisMinimumVersion=3.0
+icon=Icon.png
+author=Luis Eduardo Perez Graterol
+email=luis3176@yahoo.com
+repository=URL to the code repository
+tags=IA,META,SAM,segmentación,RNN,análisis,raster,NDVI,ORTOMOSAICO,MDS,MDE,Drones

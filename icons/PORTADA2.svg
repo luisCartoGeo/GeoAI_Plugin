@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 135.06 71.62"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="PORTADA2.svg"
+   width="135.06"
+   height="71.620003"
+   inkscape:export-filename="E:\pyqgis\SAM_GEO\plugin\geosam\Icon.png"
+   inkscape:export-xdpi="36.147717"
+   inkscape:export-ydpi="36.147717">
+  <metadata
+     id="metadata82">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs80" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1536"
+     inkscape:window-height="801"
+     id="namedview78"
+     showgrid="false"
+     inkscape:zoom="4.9273939"
+     inkscape:cx="48.980008"
+     inkscape:cy="27.921004"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     showguides="false" />
+  <rect
+     style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#990000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+     id="rect4166"
+     width="134.75684"
+     height="71.437355"
+     x="0.60884112"
+     y="0.38559172"
+     inkscape:export-xdpi="397.67975"
+     inkscape:export-ydpi="397.67975" />
+  <g
+     id="g4303"
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     transform="matrix(0.59082728,0,0,0.58563851,46.435156,6.4429292)"
+     inkscape:export-filename="E:\pyqgis\SAM_GEO\imagenes_diseño\fond_sam4.png"
+     inkscape:export-xdpi="397.67975"
+     inkscape:export-ydpi="397.67975">
+    <ellipse
+       ry="8.7400684"
+       rx="8.4670124"
+       cy="13.285583"
+       cx="39.465733"
+       id="path4177"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4179"
+       cx="39.458866"
+       cy="71.355278"
+       rx="8.4670124"
+       ry="8.7400684" />
+    <ellipse
+       ry="8.7400684"
+       rx="8.4670124"
+       cy="42.593483"
+       cx="10.339871"
+       id="ellipse4181"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4183"
+       cx="68.753036"
+       cy="42.229408"
+       rx="8.4670124"
+       ry="8.7400684" />
+    <ellipse
+       ry="6.0095186"
+       rx="5.9770193"
+       cy="13.649654"
+       cx="23.387991"
+       id="ellipse4189"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       ry="6.0095186"
+       rx="6.4646091"
+       cy="54.425865"
+       cx="39.829807"
+       id="ellipse4201"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4207"
+       cx="39.465733"
+       cy="30.032957"
+       rx="6.4646091"
+       ry="6.0095186" />
+    <ellipse
+       ry="3.7605608"
+       rx="3.773967"
+       cy="12.923722"
+       cx="10.339971"
+       id="ellipse4209"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4211"
+       cx="10.339971"
+       cy="12.923722"
+       rx="3.773967"
+       ry="3.7605608" />
+    <ellipse
+       ry="3.7605608"
+       rx="3.773967"
+       cy="71.814934"
+       cx="10.508252"
+       id="ellipse4213"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4215"
+       cx="25.315182"
+       cy="56.671478"
+       rx="3.773967"
+       ry="3.7605608" />
+    <ellipse
+       ry="3.7605608"
+       rx="3.773967"
+       cy="27.730656"
+       cx="25.146915"
+       id="ellipse4217"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4219"
+       cx="53.919483"
+       cy="27.730656"
+       rx="3.773967"
+       ry="3.7605608" />
+    <ellipse
+       ry="3.7605608"
+       rx="3.773967"
+       cy="13.091984"
+       cx="68.894669"
+       id="ellipse4221"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4223"
+       cx="68.894669"
+       cy="71.478416"
+       rx="3.773967"
+       ry="3.7605608" />
+    <ellipse
+       ry="3.7605608"
+       rx="3.773967"
+       cy="56.671482"
+       cx="54.087742"
+       id="ellipse4225"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.71164888;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4227"
+       cx="39.617329"
+       cy="41.864552"
+       rx="3.773967"
+       ry="3.7605608" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4285"
+       cx="55.812702"
+       cy="13.40586"
+       rx="5.9770193"
+       ry="6.0095186" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4287"
+       cx="10.250159"
+       cy="24.685432"
+       rx="5.9770193"
+       ry="6.0095186" />
+    <ellipse
+       ry="6.0095186"
+       rx="5.9770193"
+       cy="24.967152"
+       cx="68.77536"
+       id="ellipse4289"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       ry="6.0095186"
+       rx="5.9770193"
+       cy="42.02737"
+       cx="25.840385"
+       id="ellipse4291"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4293"
+       cx="52.834793"
+       cy="42.30909"
+       rx="5.9770193"
+       ry="6.0095186" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4295"
+       cx="9.8998165"
+       cy="58.493454"
+       rx="5.9770193"
+       ry="6.0095186" />
+    <ellipse
+       ry="6.0095186"
+       rx="5.9770193"
+       cy="58.143112"
+       cx="68.58213"
+       id="ellipse4297"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       ry="6.0095186"
+       rx="5.9770193"
+       cy="71.631287"
+       cx="23.387989"
+       id="ellipse4299"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <ellipse
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.17742002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="ellipse4301"
+       cx="55.269127"
+       cy="71.105774"
+       rx="5.9770193"
+       ry="6.0095186" />
+  </g>
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     d="m 42.936372,54.849835 c -0.09305,-0.0096 -0.23378,0.01321 -0.446262,0.05617 -2.478482,0.501263 -4.488526,2.409168 -4.935579,4.684915 -0.218034,1.109909 0.02758,2.722101 0.569224,3.736405 0.657331,1.23094 2.294653,2.547729 3.673267,2.954381 1.108867,0.327086 3.095748,0.12592 4.279381,-0.433141 1.742887,-0.823214 3.035734,-2.562697 3.30288,-4.444309 l 0.120864,-0.850646 -1.897514,0 -1.897514,0 -0.536237,-0.648551 c -0.4709,-0.569756 -0.64168,-0.648552 -1.406265,-0.648552 -1.738332,0 -2.601413,1.681758 -1.507335,2.937013 0.266771,0.306067 0.732966,0.608931 1.035879,0.673158 0.736767,0.156225 1.77143,-0.282353 2.11045,-0.894652 0.256742,-0.463696 0.353054,-0.491912 1.679481,-0.491912 1.5718,0 1.601502,0.03429 1.047878,1.204449 -1.127419,2.382945 -4.235577,3.521017 -6.65075,2.435252 -2.017324,-0.906904 -3.035163,-2.422565 -3.023068,-4.501927 0.01341,-2.3047 1.279214,-3.921153 3.630082,-4.636562 0.867281,-0.263928 1.028682,-0.382669 1.028682,-0.757123 0,-0.252139 -0.02246,-0.358348 -0.177544,-0.374367 z m 0.71228,5.235023 c 0.140983,-0.0111 0.285088,0.02817 0.481051,0.114366 0.586508,0.257984 0.745521,0.726569 0.445063,1.311576 -0.245158,0.477334 -0.974921,0.636703 -1.508835,0.329488 -0.505933,-0.291116 -0.435029,-1.215402 0.120263,-1.566654 0.183541,-0.116099 0.321475,-0.177667 0.462458,-0.188776 z"
+     id="path4200"
+     inkscape:export-filename="E:\pyqgis\SAM_GEO\imagenes_diseño\fond_sam4.png"
+     inkscape:export-xdpi="397.67975"
+     inkscape:export-ydpi="397.67975" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     d="m 51.377267,54.945381 -0.197037,0.500023 c -0.293694,0.745749 -0.263297,10.528841 0.03359,10.815453 0.290144,0.280109 5.959263,0.309929 6.492997,0.03417 0.211841,-0.109449 0.318249,-0.303186 0.254624,-0.463253 -0.09016,-0.226808 -0.628148,-0.275052 -3.063858,-0.275052 l -2.954386,0 0,-1.656119 0,-1.656124 0.766862,0.01042 c 0.829899,0.01106 1.593661,-0.370853 1.920307,-0.960086 0.1496,-0.269854 0.401735,-0.370601 0.927915,-0.370601 0.397441,0 0.824137,-0.09814 0.948307,-0.218017 0.361633,-0.349119 -0.09888,-0.708485 -0.90782,-0.708485 -0.569103,0 -0.765075,-0.09588 -0.977399,-0.478885 -0.364743,-0.657947 -1.246004,-1.065909 -2.03607,-0.942135 l -0.642102,0.100757 0,-1.378168 0,-1.378174 2.771744,0 c 2.72254,0 3.315829,-0.126475 2.823329,-0.601936 -0.12071,-0.116536 -1.440719,-0.235207 -3.18352,-0.286345 l -2.977482,-0.08744 z m 1.48904,4.539856 c 0.161459,-0.004 0.335704,0.02878 0.516444,0.108286 0.646183,0.284236 0.726352,1.220096 0.141854,1.654964 -0.407983,0.303539 -0.638801,0.292264 -1.15494,-0.05675 -0.873655,-0.590757 -0.375215,-1.684702 0.496642,-1.7065 z"
+     id="path4196"
+     inkscape:export-filename="E:\pyqgis\SAM_GEO\imagenes_diseño\fond_sam4.png"
+     inkscape:export-xdpi="397.67975"
+     inkscape:export-ydpi="397.67975" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.93000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 68.099298,65.895938 c 1.09335,-0.454075 2.534071,-1.883351 3.063806,-3.03947 0.50197,-1.095528 0.539965,-2.839585 0.08976,-4.120019 -0.486394,-1.383361 -1.958931,-2.806643 -3.475247,-3.359009 -2.213144,-0.806206 -4.575503,-0.319558 -6.237499,1.284937 -1.105807,1.067555 -1.581092,2.092787 -1.685491,3.635772 -0.113935,1.683943 0.284813,2.895038 1.330952,4.042395 1.83835,2.016218 4.410678,2.594923 6.913723,1.555394 z"
+     id="path4192"
+     inkscape:export-filename="E:\pyqgis\SAM_GEO\imagenes_diseño\fond_sam4.png"
+     inkscape:export-xdpi="397.67975"
+     inkscape:export-ydpi="397.67975" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#ffffff;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 65.652867,58.896039 c -0.287521,-0.0048 -0.593066,0.05383 -0.90512,0.191094 -0.528701,0.232558 -1.096162,1.074187 -1.096162,1.625431 0,1.62033 2.098023,2.476491 3.277689,1.337636 1.304013,-1.258897 0.276204,-3.128354 -1.276407,-3.154161 z m -0.02039,0.855278 c 0.133111,0.0032 0.268446,0.04205 0.398875,0.125657 0.551734,0.353665 0.709947,0.938727 0.377882,1.396411 -0.33128,0.456609 -1.249608,0.528777 -1.596404,0.125365 -0.551819,-0.641892 0.100829,-1.664852 0.819647,-1.647433 z"
+     id="path4188"
+     inkscape:export-filename="E:\pyqgis\SAM_GEO\imagenes_diseño\fond_sam4.png"
+     inkscape:export-xdpi="397.67975"
+     inkscape:export-ydpi="397.67975" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     d="m 77.778429,54.994603 c -1.875851,-0.03636 -3.710845,1.328324 -3.908994,3.31919 -0.131913,1.325336 0.568023,2.648814 1.895412,3.583243 1.261927,0.888346 2.004327,0.919028 2.945095,0.121607 l 0.676591,-0.573275 0.209335,0.526947 c 0.470641,1.183535 -0.144735,2.583812 -1.39967,3.184847 -1.584362,0.758815 -2.829069,0.268847 -4.211299,-1.656987 -0.28612,-0.398646 -0.333272,-0.411014 -0.452561,-0.120154 -0.315983,0.77045 0.752713,2.353909 1.920007,2.844936 0.786976,0.331043 2.07354,0.31871 2.933996,-0.02837 2.489139,-1.004049 3.108697,-3.914437 1.273707,-5.984044 -1.461459,-1.648315 -3.014534,-1.787121 -3.91979,-0.350043 l -0.366788,0.582536 -0.310404,-0.716877 c -0.551737,-1.274809 0.03092,-2.826681 1.296799,-3.454115 1.342151,-0.665231 2.350515,-0.397632 3.618985,0.960376 0.717459,0.768104 0.916327,0.89157 1.097363,0.680982 0.370673,-0.431182 -0.448605,-1.76486 -1.467449,-2.388636 -0.575247,-0.352193 -1.205054,-0.520045 -1.830335,-0.53216 z M 77.345362,59.7545 c 0.167787,-0.0013 0.347589,0.03706 0.530236,0.124503 0.520164,0.249021 0.717316,1.096648 0.353591,1.519747 -0.373638,0.434638 -1.281834,0.330518 -1.633296,-0.187326 -0.478386,-0.704847 0.02239,-1.451803 0.749469,-1.456924 z"
+     id="path4184"
+     inkscape:export-filename="E:\pyqgis\SAM_GEO\imagenes_diseño\fond_sam4.png"
+     inkscape:export-xdpi="397.67975"
+     inkscape:export-ydpi="397.67975" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     d="m 104.97134,55.188588 c -0.0823,-0.0051 -0.17899,0.04743 -0.29361,0.139264 -0.14156,0.113425 -1.20356,1.83402 -2.35967,3.823554 -1.99978,3.441407 -2.12975,3.617449 -2.677572,3.619436 -0.554605,0.002 -0.650078,-0.135659 -2.591199,-3.7338 -1.10846,-2.054678 -2.122797,-3.769738 -2.254107,-3.811392 -0.532201,-0.16883 -0.647346,0.979363 -0.588418,5.878072 0.03253,2.704012 0.131854,5.024505 0.220432,5.156845 0.122971,0.183743 0.224127,0.190198 0.428268,0.02664 0.211304,-0.1693 0.278115,-1.101925 0.318801,-4.449524 l 0.05159,-4.235268 1.505233,2.780084 1.505236,2.780371 -0.277115,0.687347 c -0.758761,1.882454 1.328859,3.440962 2.899801,2.16483 0.7417,-0.6025 0.91779,-1.360558 0.50894,-2.192333 -0.36473,-0.74203 -0.4202,-0.604975 1.68519,-4.157676 1.04369,-1.761179 1.25895,-2.025705 1.35828,-1.667702 0.0649,0.23402 0.11942,2.197256 0.12086,4.362952 0.002,3.764237 0.019,3.93763 0.37278,3.93763 0.53636,0 0.63867,-1.161838 0.55993,-6.35464 -0.0551,-3.632639 -0.13703,-4.732646 -0.49365,-4.754689 z m -5.193794,8.518019 c 0.912624,-0.005 1.259694,1.227827 0.491844,1.747038 -0.567962,0.384056 -0.838868,0.36391 -1.317491,-0.09815 -0.296517,-0.286261 -0.367248,-0.514438 -0.272615,-0.878438 0.153414,-0.590099 0.405111,-0.766672 1.098262,-0.770448 z"
+     id="path4180"
+     inkscape:export-filename="E:\pyqgis\SAM_GEO\imagenes_diseño\fond_sam4.png"
+     inkscape:export-xdpi="397.67975"
+     inkscape:export-ydpi="397.67975" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     d="m 87.774046,54.970861 c -0.51883,-0.02646 -1.01877,0.200784 -1.453652,0.678948 -0.628601,0.691173 -0.712238,1.063061 -0.411173,1.827525 0.153196,0.388997 -0.0746,1.114141 -1.343585,4.276675 -0.840432,2.0945 -1.528028,3.973529 -1.528028,4.175913 0,0.418891 0.424534,0.488996 0.739871,0.122184 0.146017,-0.169855 3.098945,-7.251344 3.098945,-7.4317 0,-0.0067 0.372563,-0.01246 0.828042,-0.01246 l 0.828047,0 1.58951,3.844983 c 1.254157,3.033908 1.66308,3.844981 1.938902,3.844981 0.192257,0 0.385618,-0.103762 0.429469,-0.230757 0.04385,-0.127 -0.636567,-1.922819 -1.511837,-3.990615 -1.552591,-3.66795 -1.588472,-3.788096 -1.478843,-4.921461 0.109765,-1.134783 0.09792,-1.173188 -0.502645,-1.661043 -0.404674,-0.328732 -0.819489,-0.502604 -1.223023,-0.523185 z m 0.0017,0.887416 c 0.746763,-0.01099 1.246995,0.720396 0.755169,1.445049 -0.383472,0.565004 -1.074426,0.616687 -1.544225,0.115525 -0.437041,-0.466215 -0.319808,-1.155995 0.242028,-1.425364 0.18945,-0.09083 0.374699,-0.132676 0.547028,-0.13521 z"
+     id="path4175"
+     inkscape:export-filename="E:\pyqgis\SAM_GEO\imagenes_diseño\fond_sam4.png"
+     inkscape:export-xdpi="397.67975"
+     inkscape:export-ydpi="397.67975" />
+</svg>
