@@ -6,7 +6,7 @@
       </P>
 </table>
 
-[<h3>Leer en Español</h3>](https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/README.md)<br>
+[Leer en Español](https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/README.md)<br>
 
 <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/fondoimagen.png" style="max-width:80%;"></center>
 <h2><b>GeoAI Plug-in Repository</b></h2><br>
