@@ -6,6 +6,7 @@
       </P>
 </table>
 
+<strong>Read in English</strong> https://github.com/luisCartoGeo/GeoAI_Plugin/blob/master/readme_en.md<br>
 <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/fondoimagen.png" style="max-width:80%;"></center>
 <h2><b>Repositorio del complemento GeoAI</b></h2><br>
 <STRONG>GeoAI</STRONG> es un complemento en desarrollo para QGIS cuyo objetivo es permitir explotar con versatilidad las capacidades de los modelos de Inteligencia Artifical (IA)
