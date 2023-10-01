@@ -226,5 +226,8 @@ Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br
    - [Enlace Video](https://youtu.be/TXPBrG-KUzg?si=TuzZuP90piUy0eot)<br>
 
 ## Extracción y conteo de hileras y plantas
+   - [Enlace Video](https://www.youtube.com/watch?v=AnQiqTYvdcA)<br>
+
 ## Extracción de zonas de cultivo y areas de riego
+ - [Enlace Video](https://youtu.be/h-ijSHcaP_4)<br>
 
