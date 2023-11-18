@@ -62,7 +62,7 @@ class rectangT(QgsMapTool):
         self.vertexMarkers = []
 
     def canvasPressEvent(self, event):
-        self.rubberBand = QgsRubberBand(self.can, True)
+        self.rubberBand = QgsRubberBand(self.can, QgsWkbTypes.PolygonGeometry)
         self.rubberBand.setColor(QColor(0,0,255,40))
         self.rubberBand.setWidth(1)
         self.pi=self.transform.toMapCoordinates(event.pos().x(),
@@ -93,7 +93,7 @@ class rectangT(QgsMapTool):
         
     def dibujar(self):
         if self.pi.x() == self.pf.x() or self.pi.y() == self.pf.y():
-            self.rubberBand.reset(2)
+            self.rubberBand.reset(QgsWkbTypes.PolygonGeometry)
             return
         r=QgsRectangle(self.pi,self.pf)
         polig=r.asWktPolygon()
