@@ -62,7 +62,7 @@ class rectangT(QgsMapTool):
         self.vertexMarkers = []
 
     def canvasPressEvent(self, event):
-        self.rubberBand = QgsRubberBand(self.can, True)
+        self.rubberBand = QgsRubberBand(self.can, QgsWkbTypes.PolygonGeometry)
         self.rubberBand.setColor(QColor(0,0,255,40))
         self.rubberBand.setWidth(1)
         self.pi=self.transform.toMapCoordinates(event.pos().x(),
@@ -93,7 +93,7 @@ class rectangT(QgsMapTool):
         
     def dibujar(self):
         if self.pi.x() == self.pf.x() or self.pi.y() == self.pf.y():
-            self.rubberBand.reset(2)
+            self.rubberBand.reset(QgsWkbTypes.PolygonGeometry)
             return
         r=QgsRectangle(self.pi,self.pf)
         polig=r.asWktPolygon()
@@ -465,6 +465,7 @@ class dialog_digitalizacion(DialogUi, DialogType):
             multiple=True
         else:
             multiple=False
+        #print('multiple: ',multiple)
         #barra de progreso
         if len(self.listPuntos)>0:
             time.sleep(1)
@@ -474,11 +475,19 @@ class dialog_digitalizacion(DialogUi, DialogType):
                 coords=coord_pixel(geotransform,i.x(),i.y())
                 #print(' transformacion coordenadas imagen',coords) 
                 input_point=np.array([[coords[0], coords[1]]])
-                masks, scores, logits = predictor.predict(
-                    point_coords=input_point,
-                    point_labels=input_label,
-                    multimask_output=multiple,
-                )                  
+                if self.param.nombre=="tinyhq":
+                    masks, scores, logits = predictor.predict(
+                        point_coords=input_point,
+                        point_labels=input_label,
+                        multimask_output=multiple,
+                        hq_token_only=False
+                    )
+                elif self.param.nombre=="sam":
+                    masks, scores, logits = predictor.predict(
+                        point_coords=input_point,
+                        point_labels=input_label,
+                        multimask_output=multiple,
+                    )               
                 listap=mask_to_imagen(masks,ruta_out,'puntos',columnas,filas,wkt,geotransform)
                 listImagenes.append(listap)
         #diccionario de puntos
@@ -489,11 +498,19 @@ class dialog_digitalizacion(DialogUi, DialogType):
                 for c in da:
                     coords=coord_pixel(geotransform,c.x(),c.y())
                     input_point=np.array([[coords[0], coords[1]]])
-                    masks, scores, logits = predictor.predict(
-                        point_coords=input_point,
-                        point_labels=input_label,
-                        multimask_output=multiple,
-                    )
+                    if self.param.nombre=="tinyhq":
+                        masks, scores, logits = predictor.predict(
+                            point_coords=input_point,
+                            point_labels=input_label,
+                            multimask_output=multiple,
+                            hq_token_only=False
+                        )
+                    elif self.param.nombre=="sam":
+                        masks, scores, logits = predictor.predict(
+                            point_coords=input_point,
+                            point_labels=input_label,
+                            multimask_output=multiple,
+                        )
                     listap=mask_to_imagen(masks,ruta_out,'dipuntos',columnas,filas,wkt,geotransform)  
                     dicImagenes[i].append(listap)
             #print(dicImagenes)
@@ -509,13 +526,22 @@ class dialog_digitalizacion(DialogUi, DialogType):
                 p1=coord_pixel(geotransform,minx,maxy)
                 p2=coord_pixel(geotransform,maxx,miny)
                 input_box = np.array([p1[0], p1[1], p2[0], p2[1]])
-                masks, _, _ = predictor.predict(
-                    point_coords=None,
-                    point_labels=None,
-                    box=input_box[None, :],
+                if self.param.nombre=="tinyhq":
+                    masks, _, _ = predictor.predict(
+                        point_coords=None,
+                        point_labels=None,
+                        box=input_box[None, :],
+                        multimask_output=multiple,
+                        hq_token_only=False
+                    )
+                elif self.param.nombre=="sam":
+                    masks, _, _ = predictor.predict(
+                        point_coords=None,
+                        point_labels=None,
+                        box=input_box[None, :],
                     multimask_output=multiple,
-                )
-                listap=mask_to_imagen(masks,ruta_out,'areas',columnas,filas,wkt,geotransform)
+                    )
+                listap=mask_to_imagen(masks,ruta_out,'areas_atrb',columnas,filas,wkt,geotransform)
                 listImagenes.append(listap)
         #diccionario de puntos
         if len(self.dicAreas)>0:
@@ -534,15 +560,26 @@ class dialog_digitalizacion(DialogUi, DialogType):
                     p1=coord_pixel(geotransform,minx,maxy)
                     p2=coord_pixel(geotransform,maxx,miny)
                     input_box = np.array([p1[0], p1[1], p2[0], p2[1]])
-                    masks, _, _ = predictor.predict(
-                        point_coords=None,
-                        point_labels=None,
-                        box=input_box[None, :],
-                        multimask_output=multiple,
-                    )
+                    if self.param.nombre=="tinyhq":
+                        masks, _, _ = predictor.predict(
+                            point_coords=None,
+                            point_labels=None,
+                            box=input_box[None, :],
+                            multimask_output=multiple,
+                            hq_token_only=False
+                        )
+                    elif self.param.nombre=="sam":
+                        masks, _, _ = predictor.predict(
+                            point_coords=None,
+                            point_labels=None,
+                            box=input_box[None, :],
+                            multimask_output=multiple,
+                        )
                     listap=mask_to_imagen(masks,ruta_out,'areas_atrb',columnas,filas,wkt,geotransform)
                     dicImagenes[i].append(listap)
-        #print('lista de imagenes ' ,listImagenes)
+                    #print('dic imagenes',dicImagenes)
+        #print('mascara',masks,len(masks))
+        #print('lista de imagenes antes de procesar' ,listImagenes)
         time.sleep(1)
         progressMessageBar.setText('Procesando segmentos')
         progress.setValue(50)
@@ -558,7 +595,7 @@ class dialog_digitalizacion(DialogUi, DialogType):
                     #print(' list imagenes 0',i)
                     list=[]
                     for l in i:
-                        #print(' ruta imagen entrada ' ,l)
+                        #print('m ruta imagen entrada ' ,l)
                         if os.path.exists(l):
                             vector=vectorizar(l)
                             #print(' ruta capa vector',vector)
@@ -572,10 +609,11 @@ class dialog_digitalizacion(DialogUi, DialogType):
                         #print(' ruta imagen entrada ' ,l)
                         if os.path.exists(l):
                             vector=vectorizar(l)
-                            #print(' ruta capa vector',vector)
+                            #print('ruta capa vector',vector)
                             listcapas.append(vector)
 #        print(' listcapas de salida de su creacion' ,listcapas)
         if len(dicImagenes)>0:
+            #print('numero de imagenes generadas',len(dicImagenes))
             for i in dicImagenes:
                 lista=dicImagenes[i]
                 diccapas[i]=[]

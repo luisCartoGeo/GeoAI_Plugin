@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>586</width>
-    <height>367</height>
+    <width>572</width>
+    <height>394</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0" colspan="3">
+       <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
@@ -35,7 +35,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="4">
+       <item row="0" column="3">
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -48,14 +48,14 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="1" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Seleccionar la imagen</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2" colspan="2">
+       <item row="1" column="1" colspan="2">
         <widget class="QComboBox" name="listImagen">
          <property name="minimumSize">
           <size>
@@ -71,7 +71,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" rowspan="2" colspan="3">
+       <item row="2" column="0" colspan="2">
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
           <widget class="QLabel" name="label_7">
@@ -144,7 +144,7 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="4">
+       <item row="2" column="3">
         <spacer name="horizontalSpacer_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -157,7 +157,30 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="3" rowspan="5" colspan="2">
+       <item row="3" column="0" colspan="2">
+        <widget class="QLabel" name="label_5">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>MODELO SAM-------------------------------</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="4">
+        <widget class="QCheckBox" name="tinyhqop">
+         <property name="text">
+          <string>Utilizar modelo HQ ligero (integrado, solo para segmentación interactiva)</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2" colspan="2">
         <widget class="QLabel" name="icon_portada">
          <property name="minimumSize">
           <size>
@@ -185,130 +208,159 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0" colspan="3">
-        <widget class="QLabel" name="label_5">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>MODELO SAM-------------------------------</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Nombre del Modelo</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QComboBox" name="nmodelo">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>vit_h</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>vit_l</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>vit_b</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QLabel" name="label_4">
-         <property name="font">
-          <font>
-           <weight>50</weight>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Ruta al archivo del modelo</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" rowspan="2">
-        <widget class="QPushButton" name="brmodelo">
-         <property name="text">
-          <string>Ubique el archivo</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1" colspan="2">
-        <widget class="QLabel" name="ruta_file">
-         <property name="text">
-          <string>................................</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Procesamiento</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1" colspan="2">
-        <widget class="QComboBox" name="device">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>CPU</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>GPU si es posible</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="10" column="0" colspan="3">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>260</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="10" column="3">
+       <item row="6" column="2">
         <widget class="QPushButton" name="bejecutar">
          <property name="text">
           <string>EJECUTAR</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="4">
+       <item row="6" column="3">
         <widget class="QPushButton" name="bcancelar">
          <property name="text">
           <string>CERRAR</string>
          </property>
+        </widget>
+       </item>
+       <item row="5" column="0" rowspan="2" colspan="2">
+        <widget class="QGroupBox" name="opModelo">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>155</height>
+          </size>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>111</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Nombre del Modelo</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="nmodelo">
+          <property name="geometry">
+           <rect>
+            <x>140</x>
+            <y>30</y>
+            <width>100</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>vit_h</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>vit_l</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>vit_b</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>60</y>
+            <width>152</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Ruta al archivo del modelo</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="brmodelo">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>80</y>
+            <width>107</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Ubique el archivo</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="ruta_file">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>80</y>
+            <width>128</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>................................</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_6">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>120</y>
+            <width>84</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Procesamiento</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="device">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>120</y>
+            <width>127</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>CPU</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>GPU si es posible</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </item>
       </layout>

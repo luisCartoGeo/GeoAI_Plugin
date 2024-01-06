@@ -30,6 +30,11 @@ from .segment_anything import *
 from .segment_anything.predictor import SamPredictor
 from .segment_anything.build_sam import sam_model_registry
 from .segment_anything.automatic_mask_generator import SamAutomaticMaskGenerator
+
+#modulos de sam_f
+from .segment_fast import *
+from .segment_fast.predictor_f import SamPredictor_f
+from .segment_fast.build_sam_f import sam_model_registry_f
 #librerias requeridas
 import torch
 import os
@@ -72,6 +77,18 @@ class dialog_precarga(DialogUi, DialogType):
         iconv=QIcon(rutaiconv)
         self.setWindowIcon(iconv)
 
+        #tiny checkpoint
+        self.modeltiny= os.path.join(self.dir,'sam_hq_vit_tiny.pth')
+        #inicializamos con tiny marcado
+        self.nmodelo.setEnabled(False)
+        self.brmodelo.setEnabled(False)
+        self.device.setEnabled(False)
+        self.label_3.setEnabled(False)
+        self.label_4.setEnabled(False)
+        self.ruta_file.setEnabled(False)
+        self.label_6.setEnabled(False)
+        self.tinyhqop.stateChanged.connect(self.gestion_cambio)
+
         #imagen portada
         iconportada= QPixmap(os.path.join(self.dir,'fondonegro.png'))
         self.icon_portada.setPixmap(iconportada)
@@ -104,19 +121,36 @@ class dialog_precarga(DialogUi, DialogType):
         #INICIALZAR LISTAS RASTER
         self.cargarLista(self.listaRaster)
 
+    def gestion_cambio(self,e):
+        if e==2:
+            self.nmodelo.setEnabled(False)
+            self.brmodelo.setEnabled(False)
+            self.device.setEnabled(False)
+            self.label_3.setEnabled(False)
+            self.label_4.setEnabled(False)
+            self.ruta_file.setEnabled(False)
+            self.label_6.setEnabled(False)
+        elif e==0:
+            self.nmodelo.setEnabled(True)
+            self.brmodelo.setEnabled(True)
+            self.device.setEnabled(True)
+            self.label_4.setEnabled(True)
+            self.ruta_file.setEnabled(True)
+            self.label_6.setEnabled(True)
+
     def ejecutar(self):
-        #si el usuario olvido cargar el modelo, desplegamos la busqueda del archivo
-        ruta=self.ruta_file.text()
-        if not os.path.exists(ruta):
-            d= QFileDialog.getOpenFileName(None,"Ruta al modelo, generalmente sam_vit_h_4b8939.pth")
-            if os.path.exists(d):
-                ruta=d
-            else:
-                self.cerrar()
-                self.iface.messageBar().pushMessage('ERROR',\
-                '<b>Error en la ruta del modelo</b>', level=0, duration=7)
-                return None
-        else:
+        if self.tinyhqop.isChecked()==False:
+            #si no se utiliza el hq tiny verificamos que se cargo el modelo, desplegamos la busqueda del archivo         
+            ruta=self.ruta_file.text()
+            if not os.path.exists(ruta):
+                d= QFileDialog.getOpenFileName(None,"Ruta al modelo, generalmente sam_vit_h_4b8939.pth")
+                if os.path.exists(d):
+                    ruta=d
+                else:
+                    self.cerrar()
+                    self.iface.messageBar().pushMessage('ERROR',\
+                    '<b>Error en la ruta del modelo</b>', level=0, duration=7)
+                    return None
             #verificando correcta asignacion del nombre del modelo
             nf=os.path.basename(ruta)
             if nf=='sam_vit_h_4b8939.pth':
@@ -127,24 +161,28 @@ class dialog_precarga(DialogUi, DialogType):
                 nombre_modelo='vit_b'
             else:
                 nombre_modelo=self.nmodelo.currentText()
-            #INFORMAR EL ESTATUS DEL PROCESO
-            progressMessageBar = self.iface.messageBar().createMessage("El proceso de carga tomara varios minutos...")
-            progress = QProgressBar()
-            progress.setMaximum(100)
-            progress.setAlignment(Qt.AlignLeft|Qt.AlignVCenter)
-            progressMessageBar.layout().addWidget(progress)
-            time.sleep(1)
-            self.iface.messageBar().pushWidget(progressMessageBar, Qgis.Info)
-            time.sleep(1)
-            progress.setValue(10)
-            #-----------------------------
-            #cerramos la caja de dialogo evitar que se ejecute dos veces
-            self.cerrar()
-            #--------------------------------------------------
-            imagen=self.listImagen.currentData()
-            #sistema de coordenadas de la imagen
-            src=imagen.crs()
-            extension=imagen.extent()
+            nombre_modelo=self.nmodelo.currentText()
+            
+        #INFORMAR EL ESTATUS DEL PROCESO
+        progressMessageBar = self.iface.messageBar().createMessage("El proceso de carga tomara varios minutos...")
+        progress = QProgressBar()
+        progress.setMaximum(100)
+        progress.setAlignment(Qt.AlignLeft|Qt.AlignVCenter)
+        progressMessageBar.layout().addWidget(progress)
+        time.sleep(1)
+        self.iface.messageBar().pushWidget(progressMessageBar, Qgis.Info)
+        time.sleep(1)
+        progress.setValue(10)
+        #-----------------------------
+        #cerramos la caja de dialogo evitar que se ejecute dos veces
+        self.cerrar()
+        #--------------------------------------------------
+        imagen=self.listImagen.currentData()
+        #sistema de coordenadas de la imagen
+        src=imagen.crs()
+        extension=imagen.extent()
+        if self.tinyhqop.isChecked()==False:
+            ruta_modelo=ruta
             device=self.device.currentText()
             if device=='CPU':
                 device='cpu'
@@ -154,47 +192,60 @@ class dialog_precarga(DialogUi, DialogType):
                 else:
                     device='cpu'
                     #print('GPU no disponible se utiliza el cpu')
-            ruta_modelo=ruta
-            #captar primeras bandas con gdal y convertir en array
-            #generar sam y predictor, guardarlos en la clase parametros
-            resultado=self.cargar_imagen(imagen)
-            arreglo=resultado[0]
-            time.sleep(1)
-            progress.setValue(50)
-            #Configuracion del modelo
-            try:
-                sam = sam_model_registry[nombre_modelo](checkpoint=ruta_modelo)
-                sam.to(device=device)
-                predictor = SamPredictor(sam)
-                predictor.set_image(arreglo)
-            except:
+            
+        #captar primeras bandas con gdal y convertir en array
+        #generar sam y predictor, guardarlos en la clase parametros
+        resultado=self.cargar_imagen(imagen)
+        arreglo=resultado[0]
+        time.sleep(1)
+        progress.setValue(50)
+        #Configuracion del modelo
+        if self.tinyhqop.isChecked():
+            device = torch.device("cpu")
+            sam = sam_model_registry_f['vit_tiny'](checkpoint=self.modeltiny)
+            sam.to(device=device)
+            sam.eval()
+            predictor = SamPredictor_f(sam)
+            predictor.set_image(arreglo)
+        else:
+            #try:
+            sam = sam_model_registry[nombre_modelo](checkpoint=ruta_modelo)
+            sam.to(device=device)
+            predictor = SamPredictor(sam)
+            predictor.set_image(arreglo)
+            """
+            except Exception as e:
                 self.iface.messageBar().pushMessage('ERROR',\
-                '<b>No se pudo configurar modelo/imagen</b>', level=0, duration=7)
+                str(e), level=0, duration=7)
                 ms = QMessageBox()
-                ms.setText("No se pudo configurar modelo. Verifique archivo de modelo e imagen")
+                ms.setText("No se pudo configurar modelo"+str(e))
                 ms.setIcon(QMessageBox.Warning)
                 ms.exec()
-                return None
+                return None"""
             #guardamos los parametros en la instancia de parametros
-            self.param.activo=True
-            self.param.sam=sam
-            #sistema de coordenadas segun QGIS
-            self.param.src=src
-            self.param.extenti=extension
-            self.param.predictor=predictor
-            self.param.geotransform=resultado[1][0]
-            self.param.filas=resultado[1][1]
-            self.param.columnas=resultado[1][2]
-            self.param.wkt=resultado[1][3]
-            self.param.arreglo=arreglo
-            del(sam)
-            del(predictor)
-            del(resultado)
-            del(arreglo)
-            #proceso finalizado
-            time.sleep(1)
-            progress.setValue(100)
-            self.iface.messageBar().clearWidgets()
+        self.param.activo=True
+        self.param.sam=sam
+        #sistema de coordenadas segun QGIS
+        if self.tinyhqop.isChecked():
+            self.param.nombre="tinyhq"
+        else:
+            self.param.nombre="sam"
+        self.param.src=src
+        self.param.extenti=extension
+        self.param.predictor=predictor
+        self.param.geotransform=resultado[1][0]
+        self.param.filas=resultado[1][1]
+        self.param.columnas=resultado[1][2]
+        self.param.wkt=resultado[1][3]
+        self.param.arreglo=arreglo
+        del(sam)
+        del(predictor)
+        del(resultado)
+        del(arreglo)
+        #proceso finalizado
+        time.sleep(1)
+        progress.setValue(100)
+        self.iface.messageBar().clearWidgets()
 
     def cargar_imagen(self,capa):
     #metodo devulev la imagen como arreglo apto para el modelo

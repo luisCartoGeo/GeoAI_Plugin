@@ -31,3 +31,4 @@ class model_params:
         self.src=None
         self.extenti=None
         self.arreglo=None
+        self.nombre=None
