@@ -30,6 +30,13 @@ Write in the note your name and <i>"Contribution to the development of the GeoAI
 
 ### License
 The plugin is licensed under: [GNU General Public License v3.0](https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/LICENSE.txt)
+<hr></hr>
+
+### News and improvements
+- Version 1.1.0 of the GeoAI plugin implements a lightweight (mobile) version of the SAM model. Detailed description in the following article
+- [Article with details on the implementation of the lightweight SAM model](https://www.linkedin.com/pulse/fast-light-sam-now-available-qgis-geoai-plugin-perez-graterol-5dhue%3FtrackingId=skVOVLYfSWS0cqmq8VvKQw%253D%253D/)
+- [Article outlining strategies and suggestions for improving Geospatial image processing](https://www.linkedin.com/pulse/how-obtain-better-results-when-capturing-elements-perez-graterol-67yve%3FtrackingId=3z7ZtJOoTGiz5rYGMHqqAQ%253D%253D/)
+<hr></hr>
 
 ### What are the advantages of GeoAI to apply the SAM model?
 Although, <strong>GeoAI</strong> is a plugin under development, in this first version I have bet on four (04) fundamental aspects:
@@ -40,6 +47,10 @@ Although, <strong>GeoAI</strong> is a plugin under development, in this first ve
     <strong>GeoAI</strong>It can work on 8-byte RGB georeferenced images (format accepted by the model) and also on uniband and multiband images such as satellite and drone images, 
      which can have different formats. For this purpose the plugin performs a transformation process.<br>
     After configuring the images the user can segment the images using two modules:<br>
+    With the implementation of the <strong>lightweight SAM model</strong> developed by ETH VIS Group, it is now possible to run segmentation with less resource consumption and very fast.<br>
+    <b>Source, repository and further details at:</b>
+    [Github ETH VIS Group](https://github.com/SysCV), 
+    [Paper: Ke, Lei and Ye, et. al, 2023 Segment Anything in High Quality, NeurIPS.](https://arxiv.org/abs/2306.01567).<br><br>
     1.- Segmentation of the whole image<br>
     It allows to segment the whole image, the user can do it using the default settings or by altering the advanced parameters. <strong>CAUTION</strong> modifying the parameters may alter the results and execution times.<br>
     2.-  Interactive segmentation<br>
@@ -75,6 +86,7 @@ However, there are aspects that could be improved, highlighting:
         - [1. Check the working environment](#1.-Check-the-working-environment)
         - [2. Update pip](#2.-Update-pip)
         - [3. Select the appropriate version of PyTorch for your computer](#3.-Select-the-appropriate-version-of-PyTorch-for-your-computer)
+    - [TIMM Installation](TIMM-Installation)
     - [Correcting a previous installation](#Correcting-a-previous-installation)
     - [Procedure to download and install the plugin](#Procedure-to-download-and-install-the-plugin)
       - [Download plugin](#Download-plugin)
