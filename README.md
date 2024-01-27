@@ -252,3 +252,6 @@ Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br
 ## Extracción de zonas de cultivo y areas de riego
  - [Enlace Video](https://youtu.be/h-ijSHcaP_4)<br>
 
+## ¿Cómo utilizar Fast Light SAM en GeoAI?
+- [Articulo](https://www.linkedin.com/pulse/nueva-versi%25C3%25B3n-del-plugin-para-qgis-geoai-con-fast-sam-perez-graterol-epwqe/)
+
