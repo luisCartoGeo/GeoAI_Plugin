@@ -84,11 +84,12 @@ def crear_capa_salida(lista,epsg,multi=False):
                     list_geo.append(g)
         else:
             for v in lista:
-                #print(v)
+                print('capa ',v)
                 vc=QgsVectorLayer(v,'vector','ogr')
                 f1=vc.getFeatures('"DN"=1')
+                print(f1)
                 f=next(f1)
-                #print(f)
+                print(f)
                 g=f.geometry()
                 #print(g)
                 list_geo.append(g)

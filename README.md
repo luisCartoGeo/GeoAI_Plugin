@@ -6,6 +6,7 @@
       </P>
 </table>
 
+<strong>Read in English</strong> https://github.com/luisCartoGeo/GeoAI_Plugin/blob/master/readme_en.md<br>
 <center><img style="text-align:center" src="https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/fondoimagen.png" style="max-width:80%;"></center>
 <h2><b>Repositorio del complemento GeoAI</b></h2><br>
 <STRONG>GeoAI</STRONG> es un complemento en desarrollo para QGIS cuyo objetivo es permitir explotar con versatilidad las capacidades de los modelos de Inteligencia Artifical (IA)
@@ -225,5 +226,8 @@ Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br
    - [Enlace Video](https://youtu.be/TXPBrG-KUzg?si=TuzZuP90piUy0eot)<br>
 
 ## Extracción y conteo de hileras y plantas
+   - [Enlace Video](https://www.youtube.com/watch?v=AnQiqTYvdcA)<br>
+
 ## Extracción de zonas de cultivo y areas de riego
+ - [Enlace Video](https://youtu.be/h-ijSHcaP_4)<br>
 

@@ -131,13 +131,21 @@ class ini_geoai:
             self.dlg.show()
             
     def segmenti(self):
-        if self.params.activo:
+        if self.params.activo and self.params.nombre=="sam":
             self.dlg=dialog_segmentar_i(self.iface,self.params)
             self.dlg.show()
         else:
-            self.iface.messageBar().pushMessage('ERROR',\
-            '<b>Primero debe Pre-Cargar el Modelo/Imagen</b>', level=0, duration=7)
-            ms = QMessageBox()
-            ms.setText("Primero debe Pre-Cargar el Modelo/Imagen. Ejecute Pre-Carga")
-            ms.setIcon(QMessageBox.Information)
-            ms.exec()
+            if self.params.activo==False:
+                self.iface.messageBar().pushMessage('ERROR',\
+                '<b>Primero debe Pre-Cargar el Modelo/Imagen</b>', level=0, duration=7)
+                ms = QMessageBox()
+                ms.setText("Primero debe Pre-Cargar el Modelo/Imagen. Ejecute Pre-Carga")
+                ms.setIcon(QMessageBox.Information)
+                ms.exec()
+            elif self.params.nombre=="tinyhq":
+                self.iface.messageBar().pushMessage('ERROR',\
+                '<b>El modelo HQ Ligero no se puede utilizar con esta opción</b>', level=0, duration=7)
+                ms = QMessageBox()
+                ms.setText("El modelo HQ Ligero no se puede utilizar con esta opción")
+                ms.setIcon(QMessageBox.Information)
+                ms.exec()
