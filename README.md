@@ -47,7 +47,8 @@ Si bien, <strong>GeoAI</strong> es un complemento en desarrollo, en esta primera
     <strong>GeoAI</strong> puede trabajar sobre imagenes georeferenciadas RGB de 8 bytes (formato aceptado por el modelo) y tambien sobre imagenes unibanda y multibanda como las 
     imagenes de satelite y de drones, las cuales pueden poseer diversos formatos. Para ello el plugin realiza un proceso de transformación.<br>
     Con la implementación del <strong>modelo ligero de SAM</strong>  desarrollada por ETH VIS Group, ahora es posible ejecutar la segmentación consumiendo menos recursos y de forma muy rápida.<br>
-    <b>Fuente, repositorio y mayores detalles en</b>: [Github ETH VIS Group](https://github.com/SysCV), 
+    <b>Fuente, repositorio y mayores detalles en:</b> 
+    [Github ETH VIS Group](https://github.com/SysCV), 
     [Paper: Ke, Lei and Ye, et. al, 2023 Segment Anything in High Quality, NeurIPS.](https://arxiv.org/abs/2306.01567).<br><br>
     Luego de configuradas las imagenes el usuario puede segmentar las imagenes utilizando dos modulos:<br>
     1.- Segmentación de toda la imagen<br>
@@ -70,6 +71,7 @@ Sin embargo, hay aspectos mejorables, destacando:
     <li>Traducir la interfaz y documentación al ingles y otros idiomas</li>
     <li>Explorar en implementar las opciones de optimización que ofrece el modelo SAM, Python y PyQGIS</li>
     <li>Añadir mayores funcionalidades</il>
+    <li>Implementar otras versiones de SAM</li>
 </ul>
 
 ## Tabla de contenido
@@ -103,6 +105,7 @@ Sin embargo, hay aspectos mejorables, destacando:
 <ol>
     <li>Instalar la versión <strong>adecuada</strong> de la libreria PyTorch</li>
     <li>Descargar y colocar en una directorio accesible los puntos de control (Check Points) del modelo SAM</li>
+    <li>Instalar TIMM</li>
 </ol>
 
 ## Requerimientos de Hardware
