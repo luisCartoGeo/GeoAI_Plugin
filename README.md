@@ -47,8 +47,8 @@ Si bien, <strong>GeoAI</strong> es un complemento en desarrollo, en esta primera
     <strong>GeoAI</strong> puede trabajar sobre imagenes georeferenciadas RGB de 8 bytes (formato aceptado por el modelo) y tambien sobre imagenes unibanda y multibanda como las 
     imagenes de satelite y de drones, las cuales pueden poseer diversos formatos. Para ello el plugin realiza un proceso de transformación.<br>
     Con la implementación del <strong>modelo ligero de SAM</strong>  desarrollada por ETH VIS Group, ahora es posible ejecutar la segmentación consumiendo menos recursos y de forma muy rápida.<br>
-    Fuente, repositorio y mayores detalles en: [Github ETH VIS Group](https://github.com/SysCV), 
-    [Paper: Ke, Lei and Ye, et. al, 2023 Segment Anything in High Quality, NeurIPS.](https://arxiv.org/abs/2306.01567).<br>
+    <b>Fuente, repositorio y mayores detalles en</b>: [Github ETH VIS Group](https://github.com/SysCV), 
+    [Paper: Ke, Lei and Ye, et. al, 2023 Segment Anything in High Quality, NeurIPS.](https://arxiv.org/abs/2306.01567).<br><br>
     Luego de configuradas las imagenes el usuario puede segmentar las imagenes utilizando dos modulos:<br>
     1.- Segmentación de toda la imagen<br>
     Permite segmentar toda la imagen, el usuario puede realizarlo utilizando la configuración por defecto o alterando los parametros avanzados. <strong>PRECAUCION</strong> la modificación de los parametros puede alterar los resultados y los tiempos de ejecución.<br>
