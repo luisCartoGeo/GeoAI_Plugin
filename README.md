@@ -85,6 +85,7 @@ Sin embargo, hay aspectos mejorables, destacando:
         - [1. Verifique el entorno de trabajo](#1.-Verifique-el-entorno-de-trabajo)
         - [2. Actualizar pip](#2.-Actualizar-pip)
         - [3. Seleccione la versión adecuada de PyTorch para su equipo](#3.-Seleccione-la-versión-adecuada-de-PyTorch-para-su-equipo)
+    - [Instalación de TIMM](Instalación-de-TIMM)
     - [Corrigiendo una instalación previa](#Corrigiendo-una-instalación-previa)
     - [Procedimiento para descargar e instalar el plugin](#Procedimiento-para-descargar-e-instalar-el-plugin)
       - [Descarga del plugin](#Descarga-del-plugin)
@@ -201,10 +202,11 @@ Introduce este codigo debe devolverte información de la liberia instalada<br>
 Otra opción, abre QGIS activa la consola de Python ejecuta import torch si no devuelve nada, esta instalada<br>
 
 ### Instalación de TIMM
-Para poder utilizar la versión ligera y rápida de SAM en GeoAI debemos instalar el paquete Python timm. Su isntalación es sencilla y obligatoria para poder utilizar el plugin.<br>
+Para poder utilizar la versión ligera y rápida de SAM en GeoAI debemos instalar el paquete Python timm. Su isntalación es sencilla y obligatoria para poder utilizar el plugin.<br><br>
 <b>¿Qué es el modulo timm?</b><br>
 "timm" es una librería de aprendizaje profundo creada por Ross Wightman, contiene una colección de modelos de visión por ordenador SOTA, capas, utilidades, optimizadores, programadores, cargadores de datos, aumentaciones y también scripts de entrenamiento/validación con capacidad para reproducir los resultados de entrenamiento de ImageNet.<br>
 Podemos instalar rápidamente utilizando pip en el shell de OSGEO, como hicimos en los pasos previos:<br>
+
     ``` 
     pip install timm
     ``` 
