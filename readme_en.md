@@ -97,3 +97,18 @@ However, there are aspects that could be improved, highlighting:
     - [Row and plant extraction and counting](#Row-and-plant-extraction-and-counting)
     - [Extraction of cultivation and irrigation areas](#Extraction-of-cultivation-and-irrigation-areas)
  - [Tutorial](#Tutorial)
+
+# Requirements
+## Installation Requirements
+
+<strong>GeoAI</strong> is designed to minimize installation requirements.  To use the plugin you only need to meet two requirements:<br>
+<ol>
+    <li>Install the <strong>appropriate</strong> version of the PyTorch library.</li>
+    <li>Download and place in an accessible directory the Check Points of the SAM model</li>
+    <li>Install TIMM</li>
+</ol>
+
+
+
+
+
