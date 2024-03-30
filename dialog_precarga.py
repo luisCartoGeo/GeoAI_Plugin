@@ -265,9 +265,10 @@ class dialog_precarga(DialogUi, DialogType):
         filas=arr.shape[0]
         columnas=arr.shape[1]
         wkt = capag.GetProjection()
-        #valor minimo y maximo considerando todas las capas
-        #debe ajustarse para solo las capas que se utilizaran
-        minmax=minimo_maximo(capa)
+        #valor minimo y maximo bandas seleccionadas
+        l=[int(i.currentText()) for i in self.lbandas] #lista de bandas (enteros)
+        #print('l', l)
+        minmax=minimo_maximo_bs(capa,l)
         del(arr)
         del(bimag)
         #creamos el arreglo de salida
@@ -275,7 +276,6 @@ class dialog_precarga(DialogUi, DialogType):
 #        print(' numero de bandas',nbandas)
         #if nbandas>1:
         if nbandas>1:
-            l=[int(i.currentText()) for i in self.lbandas]
             for n in l:
                 #print('banda ',n)
                 b=capag.GetRasterBand(n)

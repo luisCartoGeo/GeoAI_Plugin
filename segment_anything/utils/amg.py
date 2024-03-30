@@ -183,6 +183,7 @@ def build_point_grid(n_per_side: int) -> np.ndarray:
     points_x = np.tile(points_one_side[None, :], (n_per_side, 1))
     points_y = np.tile(points_one_side[:, None], (1, n_per_side))
     points = np.stack([points_x, points_y], axis=-1).reshape(-1, 2)
+    #print('puntos en build points',points)
     return points
 
 
@@ -194,6 +195,8 @@ def build_all_layer_point_grids(
     for i in range(n_layers + 1):
         n_points = int(n_per_side / (scale_per_layer**i))
         points_by_layer.append(build_point_grid(n_points))
+    #print('capas' ,n_layers)
+    #print('build_all_layer_point_grids',points_by_layer)
     return points_by_layer
 
 

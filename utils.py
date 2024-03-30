@@ -9,7 +9,83 @@ import numpy as np
 import tempfile
 from qgis.PyQt.QtCore import QVariant
 from qgis.core import (QgsField,QgsMapLayer,QgsFeature,QgsRasterLayer,
-           QgsGeometry,QgsVectorLayer,QgsRasterBandStats)
+           QgsGeometry,QgsVectorLayer,QgsRasterBandStats, QgsFeatureRequest,
+           QgsCoordinateReferenceSystem,QgsCoordinateTransform)
+
+def crearCapaVector(listPuntos,listAreas,dicPuntos,\
+                    dicAreas,dicpm,dicarm,proyecto):
+    epsg=proyecto.crs().authid()
+    uri = "point?crs="+epsg+"&field=id:integer"
+    outPoint = QgsVectorLayer(uri, "Puntos_Muestreo",  "memory")
+    lfeatures=[]
+    provPunto=outPoint.dataProvider()
+    if len(listPuntos)>0:
+        for g in listPuntos:
+            f=QgsFeature()
+            f.setFields(outPoint.fields())
+            geo=QgsGeometry.fromPointXY(g)
+            f.setGeometry(geo)
+            lfeatures.append(f)
+        provPunto.addFeatures(lfeatures)
+    if len(dicPuntos)>0:
+        for i in dicPuntos:
+            lista=dicPuntos[i]
+            for p in lista:
+                f=QgsFeature()
+                f.setFields(outPoint.fields())
+                geo=QgsGeometry.fromPointXY(p)
+                f.setGeometry(geo)
+                lfeatures.append(f)
+        provPunto.addFeatures(lfeatures)
+    if len(dicpm[0])>0 or len(dicpm[1])>0:
+        lista=dicpm[0]+dicpm[1]
+        for g in lista:
+            f=QgsFeature()
+            f.setFields(outPoint.fields())
+            geo=QgsGeometry.fromPointXY(g)
+            f.setGeometry(geo)
+            lfeatures.append(f)
+        provPunto.addFeatures(lfeatures)
+    uri = "polygon?crs="+epsg+"&field=id:integer"
+    outPolg = QgsVectorLayer(uri, "Areas_Muestreo",  "memory")
+    lfeatures=[]
+    provPolg=outPolg.dataProvider()
+    if len(listAreas)>0:
+        for g in listAreas:
+            f=QgsFeature()
+            f.setFields(outPolg.fields())
+            geo=QgsGeometry.fromRect(g)
+            f.setGeometry(geo)
+            lfeatures.append(f)
+        provPolg.addFeatures(lfeatures)
+    if len(dicAreas)>0:
+        for i in dicAreas:
+            lista=dicAreas[i]
+            for p in lista:
+                f=QgsFeature()
+                f.setFields(outPolg.fields())
+                geo=QgsGeometry.fromRect(p)
+                f.setGeometry(geo)
+                lfeatures.append(f)
+        provPolg.addFeatures(lfeatures)
+    if len(dicarm[1])>0:
+        lista=dicarm[1]
+        for p in lista:
+            f=QgsFeature()
+            f.setFields(outPolg.fields())
+            geo=QgsGeometry.fromRect(p)
+            f.setGeometry(geo)
+            lfeatures.append(f)
+        provPolg.addFeatures(lfeatures)
+    resultado=[]
+    if outPoint.featureCount()>0:
+        resultado.append(outPoint)
+    if outPolg.featureCount()>0:
+        resultado.append(outPolg)
+
+    return resultado
+
+    
 
 def vectorizar(ruta):
     #print(' imagen a vectorizar',ruta)
@@ -21,9 +97,40 @@ def vectorizar(ruta):
     )
     return r['OUTPUT']
     
+def puntosArreglo(capa,srci,proyecto,transform):
+    sc=capa.crs().authid()
+    sci=srci.authid()
+    #lista de puntos transformados
+    lpixel=[]
+    #Iteramos las geometrias
+    request = QgsFeatureRequest()
+    request.setSubsetOfAttributes([0])
+    lfeat=capa.getFeatures()
+    #print(sc,sci)
+    if not sc == sci:
+        sc1=QgsCoordinateReferenceSystem(sc)
+        sc2=QgsCoordinateReferenceSystem(sci)
+        t=QgsCoordinateTransform(sc1,sc2,proyecto)
+        for i in lfeat:
+            geo=i.geometry()
+            geot=geo.transform(t)
+            #print(geot)
+            coords=coord_pixel(transform,geot.x(),geot.y())
+            lpixel.append([coords[0], coords[1]])
+    else:
+        for i in lfeat:
+            geo=i.geometry()
+            coords=coord_pixel(transform,geo.asPoint().x(),geo.asPoint().y())
+            lpixel.append([coords[0], coords[1]])
+    return np.array(lpixel)
+            
 def mask_to_imagen(mascara,ruta,nombre,columnas,filas,wkt,geotransform):
+    #print(' en utils')
     lnombres=[]
     for e,mi in enumerate(mascara):
+        #eliminamos la dimension adicional si viene de un tensor
+        if mi.ndim==3:
+            mi=mi[0]
         arrf=np.where(mi==True,1.0,np.nan)
         nombrei=nombre+'.tif'
         #verificacion de nombre archivo
@@ -46,7 +153,8 @@ def mask_to_imagen(mascara,ruta,nombre,columnas,filas,wkt,geotransform):
         dst_ds=None
         srs=None
     return lnombres
-    
+
+#valores minimo y maximos de todas las bandas
 def minimo_maximo(imagen):
     extension=imagen.extent()
     nbandas=imagen.bandCount()
@@ -66,7 +174,22 @@ def minimo_maximo(imagen):
             if max>maximo:
                 maximo=max
     return (minimo,maximo)
-
+    
+#minimo y maximo de bandas seleccionadas
+def minimo_maximo_bs(imagen,bandas):
+    extension=imagen.extent()
+    provider= imagen.dataProvider()
+    lista=[]
+    #determinar minimo y maximo
+    for i in bandas:
+        stats = provider.bandStatistics(i, QgsRasterBandStats.All, extension)
+        lista.append(stats.minimumValue)
+        lista.append(stats.maximumValue)
+        #print('banda',i+1,min,max)
+    minimo=min(lista)
+    maximo=max(lista)
+    return (minimo,maximo)
+    
 def crear_capa_salida(lista,epsg,multi=False):
     if len(lista)>0:
         #extraer geometrias
@@ -84,12 +207,12 @@ def crear_capa_salida(lista,epsg,multi=False):
                     list_geo.append(g)
         else:
             for v in lista:
-                print('capa ',v)
+                #print('capa ',v)
                 vc=QgsVectorLayer(v,'vector','ogr')
                 f1=vc.getFeatures('"DN"=1')
-                print(f1)
+                #print(f1)
                 f=next(f1)
-                print(f)
+                #print(f)
                 g=f.geometry()
                 #print(g)
                 list_geo.append(g)
@@ -134,7 +257,7 @@ def crear_capa_atrib(dic,epsg):
                     g=f.geometry()
                     #print(g)
                     list_geo.append(g)
-            camp = QgsField(ncampo, QVariant.String)
+            camp = QgsField(ncampo, QVariant.String,'String',254,0)
             provider.addAttributes([camp])
             salida.updateFields()
             lfeatures=[]
@@ -188,7 +311,7 @@ def crear_capa_mayor_atrib(dic,epsg):
                 else:
                     #print('solo una geometria',lgeo)
                     list_geo.append(lgeo[0])
-            camp = QgsField(ncampo, QVariant.String)
+            camp = QgsField(ncampo, QVariant.String,'String',254,0)
             provider.addAttributes([camp])
             salida.triggerRepaint()
             salida.updateFields()
@@ -361,18 +484,18 @@ def cargar_capa_exist_atrib(capa,dic,epsg):
             if tipo=='campo' and not enc:
                 #print('creeando el campo')
                 #si no existe el campo lo creamos
-                camp = QgsField(ncampo, QVariant.String)
+                camp = QgsField(ncampo, QVariant.String,'String',254)
                 provider.addAttributes([camp])
                 capa.triggerRepaint()
             elif tipo=='crear' and enc:
                 #si se pide crear y el campo ya existe
                 ncampo=ncampo+'1'
-                camp = QgsField(ncampo, QVariant.String)
+                camp = QgsField(ncampo, QVariant.String,'String',254)
                 provider.addAttributes([camp])
                 capa.triggerRepaint()
             elif tipo=='crear' and not enc:
                 #si se pide crear y el campo ya existe
-                camp = QgsField(ncampo, QVariant.String)
+                camp = QgsField(ncampo, QVariant.String,'String',254)
                 provider.addAttributes([camp])
                 capa.triggerRepaint()
             capa.updateFields()
@@ -435,18 +558,18 @@ def cargar_capa_exist_atrib_mayor(capa,dic,epsg):
             if tipo=='campo' and not enc:
                 #print('creeando el campo')
                 #si no existe el campo lo creamos
-                camp = QgsField(ncampo, QVariant.String)
+                camp = QgsField(ncampo, QVariant.String,'String',254,0)
                 provider.addAttributes([camp])
                 capa.triggerRepaint()
             elif tipo=='crear' and enc:
                 #si se pide crear y el campo ya existe
                 ncampo=ncampo+'1'
-                camp = QgsField(ncampo, QVariant.String)
+                camp = QgsField(ncampo, QVariant.String,'String',254,0)
                 provider.addAttributes([camp])
                 capa.triggerRepaint()
             elif tipo=='crear' and not enc:
                 #si se pide crear y el campo ya existe
-                camp = QgsField(ncampo, QVariant.String)
+                camp = QgsField(ncampo, QVariant.String,'String',254,0)
                 provider.addAttributes([camp])
                 capa.triggerRepaint()
             capa.updateFields()

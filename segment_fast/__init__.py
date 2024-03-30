@@ -12,4 +12,4 @@ from .build_sam_f import (
     sam_model_registry_f,
 )
 from .predictor_f import SamPredictor_f
-from .automatic_mask_generator import SamAutomaticMaskGenerator
+from .automatic_mask_generator_f import SamAutomaticMaskGenerator_f
