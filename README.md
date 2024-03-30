@@ -30,6 +30,13 @@ Escribir en la nota tu nombre y <i>"Contribution to the development of the GeoAI
 
 ### Licencia
 El plugin esta bajo licencia: [Licencia pública general de GNU v3.0](https://github.com/luisCartoGeo/GeoAI_Plugin/blob/main/LICENSE.txt)
+<hr></hr>
+
+### Novedades y mejoras
+- La versión 1.1.0 del plugin GeoAI implementa una versión ligera (movil) del modelo SAM. Descripción detallada en el siguiente articulo
+- [Articulo con detalles de la implementación del modelo ligero SAM]( https://www.linkedin.com/pulse/nueva-versi%25C3%25B3n-del-plugin-para-qgis-geoai-con-fast-sam-perez-graterol-epwqe/)
+- [Articulo delineando estrategias y sugerencias para mejorar el procesamiento de imagenes Geoespaciales](https://www.linkedin.com/pulse/c%2525C3%2525B3mo-obtener-mejores-resultados-al-capturar-elementos-perez-graterol-xxrfe%3FtrackingId=tCU%252FppxqR4m%252FqD3dyfYFOw%253D%253D/)
+<hr></hr>
 
 ### ¿Qué ventajas tiene GeoAI para aplicar el modelo SAM?
 Si bien, <strong>GeoAI</strong> es un complemento en desarrollo, en esta primera versión he apostado por cuatro (04) aspectos fundamentales:
@@ -39,6 +46,10 @@ Si bien, <strong>GeoAI</strong> es un complemento en desarrollo, en esta primera
     <li><strong>Funcionalidad</strong></li>
     <strong>GeoAI</strong> puede trabajar sobre imagenes georeferenciadas RGB de 8 bytes (formato aceptado por el modelo) y tambien sobre imagenes unibanda y multibanda como las 
     imagenes de satelite y de drones, las cuales pueden poseer diversos formatos. Para ello el plugin realiza un proceso de transformación.<br>
+    Con la implementación del <strong>modelo ligero de SAM</strong>  desarrollada por ETH VIS Group, ahora es posible ejecutar la segmentación consumiendo menos recursos y de forma muy rápida.<br>
+    <b>Fuente, repositorio y mayores detalles en:</b> 
+    [Github ETH VIS Group](https://github.com/SysCV), 
+    [Paper: Ke, Lei and Ye, et. al, 2023 Segment Anything in High Quality, NeurIPS.](https://arxiv.org/abs/2306.01567).<br><br>
     Luego de configuradas las imagenes el usuario puede segmentar las imagenes utilizando dos modulos:<br>
     1.- Segmentación de toda la imagen<br>
     Permite segmentar toda la imagen, el usuario puede realizarlo utilizando la configuración por defecto o alterando los parametros avanzados. <strong>PRECAUCION</strong> la modificación de los parametros puede alterar los resultados y los tiempos de ejecución.<br>
@@ -60,6 +71,7 @@ Sin embargo, hay aspectos mejorables, destacando:
     <li>Traducir la interfaz y documentación al ingles y otros idiomas</li>
     <li>Explorar en implementar las opciones de optimización que ofrece el modelo SAM, Python y PyQGIS</li>
     <li>Añadir mayores funcionalidades</il>
+    <li>Implementar otras versiones de SAM</li>
 </ul>
 
 ## Tabla de contenido
@@ -75,6 +87,7 @@ Sin embargo, hay aspectos mejorables, destacando:
         - [1. Verifique el entorno de trabajo](#1.-Verifique-el-entorno-de-trabajo)
         - [2. Actualizar pip](#2.-Actualizar-pip)
         - [3. Seleccione la versión adecuada de PyTorch para su equipo](#3.-Seleccione-la-versión-adecuada-de-PyTorch-para-su-equipo)
+    - [Instalación de TIMM](Instalación-de-TIMM)
     - [Corrigiendo una instalación previa](#Corrigiendo-una-instalación-previa)
     - [Procedimiento para descargar e instalar el plugin](#Procedimiento-para-descargar-e-instalar-el-plugin)
       - [Descarga del plugin](#Descarga-del-plugin)
@@ -92,6 +105,7 @@ Sin embargo, hay aspectos mejorables, destacando:
 <ol>
     <li>Instalar la versión <strong>adecuada</strong> de la libreria PyTorch</li>
     <li>Descargar y colocar en una directorio accesible los puntos de control (Check Points) del modelo SAM</li>
+    <li>Instalar TIMM</li>
 </ol>
 
 ## Requerimientos de Hardware
@@ -190,6 +204,16 @@ Introduce este codigo debe devolverte información de la liberia instalada<br>
     
 Otra opción, abre QGIS activa la consola de Python ejecuta import torch si no devuelve nada, esta instalada<br>
 
+### Instalación de TIMM
+Para poder utilizar la versión ligera y rápida de SAM en GeoAI debemos instalar el paquete Python timm. Su isntalación es sencilla y obligatoria para poder utilizar el plugin.<br><br>
+<b>¿Qué es el modulo timm?</b><br>
+"timm" es una librería de aprendizaje profundo creada por Ross Wightman, contiene una colección de modelos de visión por ordenador SOTA, capas, utilidades, optimizadores, programadores, cargadores de datos, aumentaciones y también scripts de entrenamiento/validación con capacidad para reproducir los resultados de entrenamiento de ImageNet.<br>
+Podemos instalar rápidamente utilizando pip en el shell de OSGEO, como hicimos en los pasos previos:<br>
+
+    ``` 
+    pip install timm
+    ``` 
+
 ### Corrigiendo una instalación previa
 Si realizaste una instalación de PyTorch que no te permite ejecutar el plugin deberas removerla y reemplazarla por las recomendadas aqui.<br> 
 Puedes removerla utilizando pip, asegurate de incluir todo lo instalado previamente, entre ello   torchvision y torchaudio<br>
@@ -230,4 +254,7 @@ Puedes descargar los puntos de control disponibles en los siguientes enlaces:<br
 
 ## Extracción de zonas de cultivo y areas de riego
  - [Enlace Video](https://youtu.be/h-ijSHcaP_4)<br>
+
+## ¿Cómo utilizar Fast Light SAM en GeoAI?
+- [Articulo](https://www.linkedin.com/pulse/nueva-versi%25C3%25B3n-del-plugin-para-qgis-geoai-con-fast-sam-perez-graterol-epwqe/)
 
