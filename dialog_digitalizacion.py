@@ -843,7 +843,7 @@ class dialog_digitalizacion(DialogUi, DialogType):
 #        print('len(self.dicpm[1])',len(self.dicpm[1]))
 #        print('len(self.dicarm[1])',len(self.dicarm[1]))
         if len(self.dicpm[1])>0 or len(self.dicarm[1])>0:
-            self.cierreCapturaMultiple()
+            self.reini_cap_multi()
         if len(self.dataMultiple['geo'])>0:
             #inicializamos las variables pq pudieron cambiar en la siteraciones anteriores
             input_box=None
