@@ -21,15 +21,20 @@ from qgis import PyQt
 from qgis.PyQt.QtWidgets import QProgressBar
 from qgis.PyQt.QtCore import Qt, QSize
 from qgis.PyQt import QtGui
-from qgis.PyQt.QtGui import QIcon, QPixmap
+from qgis.PyQt.QtGui import QIcon, QPixmap, QColor
 from qgis.PyQt import QtWidgets
 from qgis.PyQt.QtWidgets import QFileDialog, QComboBox, QProgressBar, QMessageBox
 from qgis.core import (Qgis, QgsMapLayer, QgsRasterLayer, QgsProject, QgsMapLayerType)
+from qgis.gui import QgsMapTool, QgsRubberBand, QgsMapToolPan, QgsVertexMarker,QgsMapToolEmitPoint
 #modulos de sam
 from .segment_anything import *
 from .segment_anything.predictor import SamPredictor
 from .segment_anything.build_sam import sam_model_registry
 from .segment_anything.automatic_mask_generator import SamAutomaticMaskGenerator
+#importacion API de QGIS
+from qgis.core import (Qgis,QgsMapLayer, QgsRasterLayer, QgsProject, QgsMapLayerType, QgsRectangle,
+                      QgsGeometry, QgsWkbTypes, QgsVectorLayer,QgsCoordinateReferenceSystem,
+                      QgsCoordinateTransform,QgsPointXY)
 
 #modulos de sam_f
 from .segment_fast import *
@@ -45,6 +50,83 @@ try:
     import gdal
 except:
     from osgeo import gdal
+    
+#herramienta para dibujar el rectangulo en patalla
+class rectangT(QgsMapTool):
+    def __init__(self, iiface,dlg):
+        QgsMapTool.__init__(self, iiface.mapCanvas())
+        self.dlg=dlg #Referencia al dialogo digitalizacion
+        self.iface = iiface
+        self.can= self.iface.mapCanvas()
+        self.transform = self.can.getCoordinateTransform()
+        
+        self.captar=False
+        self.deactivated.connect(self.reset)
+        #Lista que contendra los vertices
+        self.vertexMarkers = []
+
+    def canvasPressEvent(self, event):
+        self.rubberBand = QgsRubberBand(self.can, QgsWkbTypes.PolygonGeometry)
+        self.rubberBand.setColor(QColor(255,0,45,20))
+        self.rubberBand.setWidth(1)
+        self.pi=self.transform.toMapCoordinates(event.pos().x(),
+                             event.pos().y())
+#        print(self.pi)
+#        self.pf= self.pi
+        self.captar=True
+        self.addVertex(self.pi)
+    
+    def canvasMoveEvent(self, event):
+        if not self.captar:
+          return
+        self.pf= self.transform.toMapCoordinates(event.pos().x(),event.pos().y())
+        self.dibujar()
+
+    def canvasReleaseEvent(self, event):
+        self.captar=False
+        self.pf= self.transform.toMapCoordinates(event.pos().x(),
+                    event.pos().y())
+        self.addVertex(self.pf)
+        self.dibujar()
+        #Enviamos el rectangulo al dialogo, la region trazada por el usuario
+        r=QgsRectangle(self.pi,self.pf)
+        #obtenido el rectangulo actualizo histoSelec
+        #print('rec enviado ',r)
+        self.dlg.addAreaI(r)
+        self.reset()
+        #self.dlg.desactivarTool()
+        
+    def dibujar(self):
+        if self.pi.x() == self.pf.x() or self.pi.y() == self.pf.y():
+            self.rubberBand.reset(QgsWkbTypes.PolygonGeometry)
+            return
+        r=QgsRectangle(self.pi,self.pf)
+        polig=r.asWktPolygon()
+        geo=QgsGeometry().fromWkt(polig)
+        self.rubberBand.setToGeometry(geo, None)
+
+    def addVertex(self, pt):
+        """
+        Add a new vertex to the current polygon.
+        @param {QgsPoint} pt Position of the mouse click in map coordinates
+        """
+        # And add also a small marker to highlight the vertices
+        m = QgsVertexMarker(self.can)
+        self.vertexMarkers.append(m)
+        m.setCenter(pt)
+       
+    def reset(self):
+        self.starP=None
+        self.endP=None
+        try:
+            self.can.scene().removeItem(self.rubberBand)
+        except:
+            pass
+        # Removemos los vertices
+        for marker in self.vertexMarkers:
+            self.can.scene().removeItem(marker)
+            del(marker)
+        self.can.refresh()
 
 DialogUi, DialogType=uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'precarga.ui'))
@@ -76,6 +158,9 @@ class dialog_precarga(DialogUi, DialogType):
         rutaiconv= os.path.join(self.dir,'icon.png')
         iconv=QIcon(rutaiconv)
         self.setWindowIcon(iconv)
+        
+        #control si la imagen posee o no georeferencia
+        self.no_geo=False
 
         #tiny checkpoint
         self.modeltiny= os.path.join(self.dir,'sam_hq_vit_tiny.pth')
@@ -120,6 +205,67 @@ class dialog_precarga(DialogUi, DialogType):
         
         #INICIALZAR LISTAS RASTER
         self.cargarLista(self.listaRaster)
+        
+        #''''''''''''''''''''''''''''''''''''''''''''
+        #----PARAMETROS DE CAPTACION DE TRAZADOS EN PANTALLA
+        #Lista de puntos poligono dibujado tool barea
+        self.rectanguloCorte=None
+        self.cortarImagen=False
+        #variable booleana cuando se activan los tool
+        self.dibuAreaI=False
+        
+        self.bareai.clicked.connect(self.dibujarAreaI)
+        iconareai=QIcon(os.path.join(self.dir,'icons','cortar.png'))
+        self.bareai.setIcon(iconareai)
+        #estilo de los botones
+        stylesheet = \
+            "QPushButton {\n" \
+            + "background-color: rgb(200, 200, 200);\n" \
+            + "}" \
+            + "QPushButton::flat{\n" \
+            + "background-color: rgb(100, 100, 160);\n" \
+            + "border: none;;\n" \
+            + "}"
+        self.bareai.setStyleSheet(stylesheet)
+        #''''''''''''''''''''''''''''''''''''''''''''
+        
+    #''''''''''''''''''''''''''''''''''
+    def dibujarAreaI(self):
+        if self.dibuAreaI==False:
+            self.bareai.setFlat(True)
+            #Activamos el tool para seleccionar la region
+            self.sr=rectangT(self.iface,self)
+            self.iface.mapCanvas().setMapTool(self.sr)
+            self.dibuAreaI=True
+        else:
+            self.bareai.setFlat(False)
+            self.dibuAreaI=False
+            try:
+                self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
+            except:
+                pass
+    
+    def addAreaI(self,r):
+#        if self.nareas.value()<=10:
+        #verificamos los sistemas de coordenadas de ser necesario se realiza 
+        #la transformacion al sc de la imagen 
+        sc=self.pry.crs().authid()
+        sci=self.listImagen.currentData().crs().authid()
+        self.cortarImagen=True
+        #sci='EPSG:2202'
+        if sc == sci:
+            geo=r
+        elif sci=='':#si la imagen no posee sistemas de coordenadas no transformamos
+            self.no_geo==True
+            geo=r
+        else:
+            sc1=QgsCoordinateReferenceSystem(sc)
+            sc2=QgsCoordinateReferenceSystem(sci)
+            t=QgsCoordinateTransform(sc1,sc2,self.pry)
+            rt=t.transform(r)
+            geo=rt
+        self.rectanguloCorte=geo
+    #''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
     def gestion_cambio(self,e):
         if e==2:
@@ -196,56 +342,57 @@ class dialog_precarga(DialogUi, DialogType):
         #captar primeras bandas con gdal y convertir en array
         #generar sam y predictor, guardarlos en la clase parametros
         resultado=self.cargar_imagen(imagen)
-        arreglo=resultado[0]
-        time.sleep(1)
-        progress.setValue(50)
-        #Configuracion del modelo
-        if self.tinyhqop.isChecked():
-            device = torch.device("cpu")
-            sam = sam_model_registry_f['vit_tiny'](checkpoint=self.modeltiny)
-            sam.to(device=device)
-            sam.eval()
-            predictor = SamPredictor_f(sam)
-            predictor.set_image(arreglo)
-        else:
-            #try:
-            sam = sam_model_registry[nombre_modelo](checkpoint=ruta_modelo)
-            sam.to(device=device)
-            predictor = SamPredictor(sam)
-            predictor.set_image(arreglo)
-            """
-            except Exception as e:
-                self.iface.messageBar().pushMessage('ERROR',\
-                str(e), level=0, duration=7)
-                ms = QMessageBox()
-                ms.setText("No se pudo configurar modelo"+str(e))
-                ms.setIcon(QMessageBox.Warning)
-                ms.exec()
-                return None"""
-            #guardamos los parametros en la instancia de parametros
-        self.param.activo=True
-        self.param.sam=sam
-        #sistema de coordenadas segun QGIS
-        if self.tinyhqop.isChecked():
-            self.param.nombre="tinyhq"
-        else:
-            self.param.nombre="sam"
-        self.param.src=src
-        self.param.extenti=extension
-        self.param.predictor=predictor
-        self.param.geotransform=resultado[1][0]
-        self.param.filas=resultado[1][1]
-        self.param.columnas=resultado[1][2]
-        self.param.wkt=resultado[1][3]
-        self.param.arreglo=arreglo
-        del(sam)
-        del(predictor)
-        del(resultado)
-        del(arreglo)
-        #proceso finalizado
-        time.sleep(1)
-        progress.setValue(100)
-        self.iface.messageBar().clearWidgets()
+        if not resultado is None:
+            arreglo=resultado[0]
+            time.sleep(1)
+            progress.setValue(50)
+            #Configuracion del modelo
+            if self.tinyhqop.isChecked():
+                device = torch.device("cpu")
+                sam = sam_model_registry_f['vit_tiny'](checkpoint=self.modeltiny)
+                sam.to(device=device)
+                sam.eval()
+                predictor = SamPredictor_f(sam)
+                predictor.set_image(arreglo)
+            else:
+                #try:
+                sam = sam_model_registry[nombre_modelo](checkpoint=ruta_modelo)
+                sam.to(device=device)
+                predictor = SamPredictor(sam)
+                predictor.set_image(arreglo)
+                """
+                except Exception as e:
+                    self.iface.messageBar().pushMessage('ERROR',\
+                    str(e), level=0, duration=7)
+                    ms = QMessageBox()
+                    ms.setText("No se pudo configurar modelo"+str(e))
+                    ms.setIcon(QMessageBox.Warning)
+                    ms.exec()
+                    return None"""
+                #guardamos los parametros en la instancia de parametros
+            self.param.activo=True
+            self.param.sam=sam
+            #sistema de coordenadas segun QGIS
+            if self.tinyhqop.isChecked():
+                self.param.nombre="tinyhq"
+            else:
+                self.param.nombre="sam"
+            self.param.src=src
+            self.param.extenti=extension
+            self.param.predictor=predictor
+            self.param.geotransform=resultado[1][0]
+            self.param.filas=resultado[1][1]
+            self.param.columnas=resultado[1][2]
+            self.param.wkt=resultado[1][3]
+            self.param.arreglo=arreglo
+            del(sam)
+            del(predictor)
+            del(resultado)
+            del(arreglo)
+            #proceso finalizado
+            time.sleep(1)
+            progress.setValue(100)
+            self.iface.messageBar().clearWidgets()
 
     def cargar_imagen(self,capa):
     #metodo devulev la imagen como arreglo apto para el modelo
@@ -265,9 +412,50 @@ class dialog_precarga(DialogUi, DialogType):
         filas=arr.shape[0]
         columnas=arr.shape[1]
         wkt = capag.GetProjection()
-        #valor minimo y maximo considerando todas las capas
-        #debe ajustarse para solo las capas que se utilizaran
-        minmax=minimo_maximo(capa)
+        if wkt=='':
+            self.no_geo==True
+        if self.cortarImagen==True and not self.rectanguloCorte is None:
+            if not self.no_geo==True:
+            #----crear geotransform y filas y columnas
+                pxi=self.rectanguloCorte.xMinimum()
+                pyi=self.rectanguloCorte.yMaximum()
+                pxf=self.rectanguloCorte.xMaximum()
+                pyf=self.rectanguloCorte.yMinimum()
+                p1=coord_pixel(geotransform,pxi,pyi)
+                p2=coord_pixel(geotransform,pxf,pyf)
+                #print('p1 y p2 ',p1,p2)
+                ars=arr[p1[1]:p2[1],p1[0]:p2[0]]
+                filas=ars.shape[0]
+                columnas=ars.shape[1]
+                preal=pixel_coord(geotransform,p1[0],p1[1])
+                #print('p real ',preal)
+                #creacion geotransform de salida
+                gt=(
+                     preal[0],
+                     geotransform[1],
+                     geotransform[2],
+                     preal[1],
+                     geotransform[4],
+                     geotransform[5]
+                    )
+                geotransform=gt
+                del(ars)
+            else:
+                self.iface.messageBar().clearWidgets()
+                self.iface.messageBar().pushMessage('ERROR',\
+                    '<b>No es posible aplicar selección de ventana a imagenes '+\
+                    'no georeferenciadas, proximamente estara disponible</b>', 
+                    level=0, duration=7)
+                return None
+        else:
+            filas=arr.shape[0]
+            columnas=arr.shape[1]
+        
+        #lista con el numero de bandas
+        l=[int(i.currentText()) for i in self.lbandas] #lista de bandas (enteros)
+        #print('l', l)
+        #valor minimo y maximo bandas seleccionadas
+        minmax=minimo_maximo_bs(capa,l)
         del(arr)
         del(bimag)
         #creamos el arreglo de salida
@@ -275,12 +463,17 @@ class dialog_precarga(DialogUi, DialogType):
 #        print(' numero de bandas',nbandas)
         #if nbandas>1:
         if nbandas>1:
-            l=[int(i.currentText()) for i in self.lbandas]
             for n in l:
                 #print('banda ',n)
                 b=capag.GetRasterBand(n)
                 ba=b.ReadAsArray()
 #                print(ba.dtype)
+                #----------------------------------------------------------------
+                #--------procesamos el corte-----------------
+                if self.cortarImagen==True and not self.rectanguloCorte is None:
+                    ba=ba[p1[1]:p2[1],p1[0]:p2[0]]
+                    #uso del minimo y maximo del arreglo-banda
+                    minmax=(np.nanmin(ba),np.nanmax(ba))
                 if ba.dtype!='uint8':
 #                    print('entro agtransformacion de la imagen')
                     if minmax[1]<2:
@@ -304,9 +497,18 @@ class dialog_precarga(DialogUi, DialogType):
                 else:
                     #print(' la imagen es uint8 carga directa')
                     lbands.append(ba)
+            self.cortarImagen=False
+            self.rectanguloCorte=None
+            self.dibujarAreaI()
         else:
             b=capag.GetRasterBand(1)
             ba=b.ReadAsArray()
+            #----------------------------------------------------------------
+            #--------procesamos el corte-----------------
+            if self.cortarImagen==True and not self.rectanguloCorte is None:
+                ba=ba[p1[1]:p2[1],p1[0]:p2[0]]
+                #uso del minimo y maximo del arreglo-banda
+                minmax=(np.nanmin(ba),np.nanmax(ba))
             if ba.dtype!='uint8':
                 if minmax[1]<2:
                     bac=ba*10000
@@ -331,12 +533,13 @@ class dialog_precarga(DialogUi, DialogType):
                 lbands.append(ba)
                 lbands.append(ba.copy())
                 lbands.append(ba.copy())
+            self.cortarImagen=False
+            self.rectanguloCorte=None
+            self.dibujarAreaI()
         #else:
         capag=None
         return (np.dstack(lbands),(geotransform,filas,columnas,wkt))
-        
-        
-   
+
     def archivo_modelo(self):
         d=QFileDialog.getOpenFileName(None,"Ruta al modelo, generalmente sam_vit_h_4b8939.pth",filter='*.pth')
         if os.path.exists(d[0]):

@@ -23,11 +23,12 @@ from qgis.PyQt.QtCore import Qt, QSize
 from qgis.PyQt import QtGui
 from qgis.PyQt.QtGui import QIcon, QPixmap, QColor
 from qgis.PyQt import QtWidgets
-from qgis.PyQt.QtWidgets import QFileDialog, QComboBox, QLineEdit
+from qgis.PyQt.QtWidgets import QFileDialog, QComboBox, QLineEdit, QMessageBox
 from qgis.gui import QgsMapTool, QgsRubberBand, QgsMapToolPan, QgsVertexMarker,QgsMapToolEmitPoint
 from qgis.core import (Qgis,QgsMapLayer, QgsRasterLayer, QgsProject, QgsMapLayerType, QgsRectangle,
                       QgsGeometry, QgsWkbTypes, QgsVectorLayer,QgsCoordinateReferenceSystem,
                       QgsCoordinateTransform,QgsPointXY)
+
 #gestion de widgets
 from .control_digitaliz import *
 #modulos de sam
@@ -36,7 +37,7 @@ from .segment_anything.build_sam import sam_model_registry
 from .segment_anything.automatic_mask_generator import SamAutomaticMaskGenerator
 #librerias requeridas
 import torch
-import os
+import os, gc
 import numpy as np
 #archivos temprales 
 import tempfile
@@ -48,10 +49,58 @@ try:
 except:
     from osgeo import gdal
 
+#herramienta para marcar los puntos en pantalla
+class ptool(QgsMapToolEmitPoint):
+    def __init__(self, iface,dlg):
+        self.ifac=iface
+        self.dlg=dlg #Referencia al dialogo digitalizacion
+        self.can=self.ifac.mapCanvas()
+        QgsMapToolEmitPoint.__init__(self, self.can)
+        self.inirubber()
+        self.transform = self.can.getCoordinateTransform()
+        self.deactivated.connect(self.reset)
+        self.reseteado=False
+        
+    def inirubber(self):
+        self.rubberBand = None
+        self.rubberBand = QgsRubberBand(self.can, QgsWkbTypes.PointGeometry)
+        if self.dlg.opPrompt.currentText()=='Adicionar a la selección':
+            self.rubberBand.setColor(QColor(0,0,255))
+        else:
+            self.rubberBand.setColor(QColor(255,0,0))
+        self.rubberBand.setIcon(QgsRubberBand.ICON_CROSS)
+        self.rubberBand.setIconSize(10)
+        self.rubberBand.setWidth(2)
+    
+    def canvasPressEvent(self, event):
+        #print(' self.reseteado' ,self.reseteado)
+        if self.reseteado==True:
+            self.reseteado=False
+            self.inirubber()
+        self.pi=self.transform.toMapCoordinates(event.pos().x(),
+                             event.pos().y())
+        print(event.pos().x(),event.pos().y())
+        print(self.pi.x(),self.pi.y())
+        geo=QgsGeometry.fromPointXY(self.pi)
+        self.rubberBand.setToGeometry(geo, None)
+        self.dlg.captar_punto([self.pi.x(),self.pi.y()])
+    
+    def reset(self):
+        self.reseteado=True
+        try:
+            self.can.scene().removeItem(self.rubberBand)
+        except:
+            pass
+        
+    def setColor(self,color):
+        self.rubberBand.setColor(color)
+        
+        
+#herramienta para dibujar el rectangulo en patalla
 class rectangT(QgsMapTool):
     def __init__(self, iiface,dlg):
         QgsMapTool.__init__(self, iiface.mapCanvas())
-        self.dlg=dlg #Referencia la objeto histo selec
+        self.dlg=dlg #Referencia al dialogo digitalizacion
         self.iface = iiface
         self.can= self.iface.mapCanvas()
         self.transform = self.can.getCoordinateTransform()
@@ -147,6 +196,9 @@ class dialog_digitalizacion(DialogUi, DialogType):
         self.param=parametros
         self.listaVector=listaVector
         
+        #variable para imagen no geoespacial
+        self.nogeo=False
+        
         #imagen portada
         iconportada= QPixmap(os.path.join(self.dir,'fondoimagen.png'))
         self.icon_portada.setPixmap(iconportada)
@@ -181,10 +233,22 @@ class dialog_digitalizacion(DialogUi, DialogType):
         self.dibuArea=False
         self.dibuPunto=False
         
+        #ESTRUCTURAS PARA MAYOR FUNCIONALIDAD
+        self.dicpm={0:[],1:[],'data':[]}
+        self.dicarm={1:[],'data':[]}
+        self.capMulti=False #identifica que se esta haciendo captura multiple
+        self.dataMultiple={'geo':[]}
+        self.reiniMultiple='Adicionar' #identifica si se adicionaran datos a una captura multiple o se trabajara una nueva
+        
         #tool para dibujar puntos
         can = iface.mapCanvas()
-        self.tool_punto = QgsMapToolEmitPoint(can)
-        self.tool_punto.canvasClicked.connect(self.captar_punto)
+        self.tool_punto = ptool(iface,self)
+#        self.tool_punto.canvasClicked.connect(self.captar_punto)
+        
+        #damos formato a combox con tipos de prompts
+        model = self.opPrompt.model()
+        model.setData(model.index(0, 0), QtGui.QColor(0,0,255), QtCore.Qt.BackgroundRole)
+        model.setData(model.index(1, 0), QtGui.QColor(255,0,0), QtCore.Qt.BackgroundRole)
         
         #EVENTOS
         self.bpunto.clicked.connect(self.dibujarPunto)
@@ -203,6 +267,8 @@ class dialog_digitalizacion(DialogUi, DialogType):
         if len(self.listaVector)>0:
             self.cargarLista(self.listaVector)
         #INICIALIZAR CONTROLES
+        #set pagina
+        self.paginador.setCurrentIndex(0)
         self.op_capa.setChecked(False)
         if len(self.listaVector)==0:
             self.op_capa.setEnabled(False)
@@ -230,6 +296,19 @@ class dialog_digitalizacion(DialogUi, DialogType):
         self.pry.layersAdded.connect(self.capaAdicionada)
         #evento del combobox lista de capas vector
         self.listCVector.currentTextChanged.connect(self.cambio_capa)
+        #evento del combobox tipo de seleccion o prompt
+        self.opPrompt.currentTextChanged.connect(self.cambio_prompt)
+        
+        #EVENTO CAMBIAR PAGINA
+        self.opAvanzadas.clicked.connect(self.cambiarPagina)
+        iconavan=QIcon(os.path.join(self.dir,'icons','opAvanzadas.png'))
+        self.opAvanzadas.setIcon(iconavan)
+        self.opBasicas.clicked.connect(self.retornar)
+        iconbasicas=QIcon(os.path.join(self.dir,'icons','opBasicas.png'))
+        self.opBasicas.setIcon(iconbasicas)
+        
+        #Evento crear capa de datos de muestreo
+        self.crearVector.clicked.connect(self.crear_vector)
         
         #control externo de widgets
         self.control=control_ui_digitaliz(self)
@@ -247,7 +326,31 @@ class dialog_digitalizacion(DialogUi, DialogType):
         self.bpunto.setStyleSheet(stylesheet)
         self.ejecutar.clicked.connect(self.procesar)
         self.pushButton_2.clicked.connect(self.cerrar)
+        self.reiniCapturaMultiple.clicked.connect(self.reini_cap_multi)
+
+ 
+    def crear_vector(self):
+        lcapas=crearCapaVector(self.listPuntos,self.listAreas,self.dicPuntos,\
+                    self.dicAreas,self.dicpm,self.dicarm,self.pry)
+        if len(lcapas)>0:
+            for i in lcapas:
+                self.pry.addMapLayer(i)
+        
+    def cambiarPagina(self,e):
+        self.paginador.setCurrentIndex(1)
     
+    def retornar(self,e):
+        self.paginador.setCurrentIndex(0)
+    
+    def cambio_prompt(self):
+        if self.opCaptura.isChecked()==True:#captura sencilla
+            if self.opPrompt.currentText()=='Excluir de la selección':
+                self.tool_punto.setColor(QColor(255,0,0))
+            else:
+                self.tool_punto.setColor(QColor(0,0,255))
+        else:
+            self.tool_punto.setColor(QColor(0,0,255))
+        
     def btnstate(self,b):
         if self.sender().objectName()=='op_unsegment':
             self.op_mayor.setEnabled(False)
@@ -273,33 +376,41 @@ class dialog_digitalizacion(DialogUi, DialogType):
         #sci='EPSG:2202'
         if sc == sci:
             geo=r
+        elif sci=='':#si la imagen no posee sistemas de coordenadas no transformamos
+            geo=r
         else:
             sc1=QgsCoordinateReferenceSystem(sc)
             sc2=QgsCoordinateReferenceSystem(sci)
             t=QgsCoordinateTransform(sc1,sc2,self.pry)
             rt=t.transform(r)
             geo=rt
-        if self.op_atrib.isChecked():
-            if self.listCVector.count()==0 or self.op_crear_campo.isChecked():
-                #print(' crar area con atributos')
-                valor=self.valor.text()
-                ncampo=self.ncampo.text()
-                if ('crear',ncampo,valor) in self.dicAreas:
-                    self.dicAreas[('crear',ncampo,valor)].append(geo)
-                else:
-                    self.dicAreas[('crear',ncampo,valor)]=[geo]
-            elif not self.op_crear_campo.isEnabled() or not self.op_crear_campo.isChecked():
-                if self.lcampos.isEnabled():
+        if self.opCaptura.isChecked()==False:#captura sencilla
+            self.cierreCapturaMultiple()#cerramos la captura multiple si hay eventos
+            if self.op_atrib.isChecked():
+                if self.listCVector.count()==0 or self.op_crear_campo.isChecked():
+                    #print(' crar area con atributos')
                     valor=self.valor.text()
-                    ncampo=self.lcampos.currentText()
-                    if ('campo',ncampo,valor) in self.dicAreas:
-                        self.dicAreas[('campo',ncampo,valor)].append(geo)
+                    ncampo=self.ncampo.text()
+                    if ('crear',ncampo,valor) in self.dicAreas:
+                        self.dicAreas[('crear',ncampo,valor)].append(geo)
                     else:
-                        self.dicAreas[('campo',ncampo,valor)]=[geo]
-            #print('diccionario de areas atributos',self.dicAreas)
-        elif not self.op_atrib.isChecked():
-            self.listAreas.append(geo)
-            #print('lista',self.listAreas)
+                        self.dicAreas[('crear',ncampo,valor)]=[geo]
+                elif not self.op_crear_campo.isEnabled() or not self.op_crear_campo.isChecked():
+                    if self.lcampos.isEnabled():
+                        valor=self.valor.text()
+                        ncampo=self.lcampos.currentText()
+                        if ('campo',ncampo,valor) in self.dicAreas:
+                            self.dicAreas[('campo',ncampo,valor)].append(geo)
+                        else:
+                            self.dicAreas[('campo',ncampo,valor)]=[geo]
+                #print('diccionario de areas atributos',self.dicAreas)
+            elif not self.op_atrib.isChecked():
+                self.listAreas.append(geo)
+                #print('lista',self.listAreas)
+        else:#multiples puntos por captura
+            #solo se lleva conteo en puntos
+            self.reiniMultiple='Adicionar'
+            self.capturaMultiple('positivo',punto=None,area=geo,data=None)
         #actualizamos el conteo d eventos disponibles
         nlista=len(self.listAreas)
         c=0
@@ -313,11 +424,13 @@ class dialog_digitalizacion(DialogUi, DialogType):
         self.nareas.setValue(0)
         self.listAreas=[]
         self.dicAreas={}
+        self.dataMultiple={'geo':[]}
 
     def borrar_puntos(self):
         self.npuntos.setValue(0)
         self.listPuntos=[]
         self.dicPuntos={}
+        self.dataMultiple={'geo':[]}
 
     #INICIALZAR LISTAS VECTOR
     def cargarLista(self,lista):
@@ -332,7 +445,6 @@ class dialog_digitalizacion(DialogUi, DialogType):
             campos=capa.fields()
             if not campos.isEmpty():
                 for f in campos:
-                    #print(f.name(),f.typeName())
                     if f.typeName()=='Text' or f.typeName()=='String' or f.typeName()=='string':
                         self.lcampos.addItem(f.name(),f)
         
@@ -347,15 +459,119 @@ class dialog_digitalizacion(DialogUi, DialogType):
         else:
             self.bpunto.setFlat(False)
             self.dibuPunto=False
+#            self.tool_punto.reset()
             try:
                 self.iface.mapCanvas().setMapTool(QgsMapToolPan(self.iface.mapCanvas()))
             except:
                 pass
+                
+    #METODOS DE CAPTURA MULTIPLE
+    #metodo captura multiple
+    def capturaMultiple(self,tipo,punto=None,area=None,data=None):
+        if not punto==None:
+            if tipo=='positivo':
+                self.dicpm[1].append(punto)
+            else:
+                self.dicpm[0].append(punto)
+            #almacenamos los datos
+            if not data==None and len(self.dicpm['data'])==0:
+                self.dicpm['data'].append(data)
+#        print('self.dicpm',self.dicpm)
+        if not area==None:
+            self.dicarm[1].append(area)
+            
+    #cerrar captura multiple
+    def cierreCapturaMultiple(self):
+#        self.capMulti=False
+        labels=[]
+        lista=[]
+        input_box =[]
+        procesado=False#identifica si se cargo algun dato de las opciones
+        geotransform=self.param.geotransform
+        if len(self.dicpm[1])>0 or len(self.dicpm[0])>0:
+            procesado=True #control interno q verifca si se agregaron datos validos
+            for i in self.dicpm[1]:
+                coords=coord_pixel(geotransform,i.x(),i.y())
+                lista.append([coords[0], coords[1]])
+                labels.append(1)
+            if len(self.dicpm[0])>0:
+                for i in self.dicpm[0]:
+                    coords=coord_pixel(geotransform,i.x(),i.y())
+                    lista.append([coords[0], coords[1]])
+                    labels.append(0)
+        if len(self.dicarm[1])==1:
+            procesado=True
+            i=self.dicarm[1][0]
+            minx=i.xMinimum()
+            maxx=i.xMaximum()
+            miny=i.yMinimum()
+            maxy=i.yMaximum()
+            p1=coord_pixel(geotransform,minx,maxy)
+            p2=coord_pixel(geotransform,maxx,miny)
+            input_box.append([p1[0], p1[1], p2[0], p2[1]])
+            input_box= np.array(input_box)
+        if len(self.dicarm[1])>1:
+            procesado=True
+            for i in self.dicarm[1]:
+                minx=i.xMinimum()
+                maxx=i.xMaximum()
+                miny=i.yMinimum()
+                maxy=i.yMaximum()
+                p1=coord_pixel(geotransform,minx,maxy)
+                p2=coord_pixel(geotransform,maxx,miny)
+                input_box.append([p1[0], p1[1], p2[0], p2[1]])
+            input_box= np.array(input_box)
+            input_box=torch.tensor(input_box, device=self.param.predictor.device)
+#           print('filas y columnas',self.param.filas,self.param.columnas)
+            input_box=self.param.predictor.transform.apply_boxes_torch(input_box, (self.param.filas,self.param.columnas))
+#           print(len(input_box),input_box.shape)
+            #print(' tipo input box transf',type(input_box),input_box)
+        if procesado==True:
+            #deben adicionarse puntos o areas, dado caso seria solo restar puntos
+#            print('len(self.dicpm[1])',len(self.dicpm[1]))
+#            print('len(self.dicarm[1])',len(self.dicarm[1]))
+            if len(self.dicpm[1])>0 or len(self.dicarm[1])>0:
+                data=None
+                if len(self.dicpm['data'])>0:
+                    data=self.dicpm['data'][0]
+                #print('se envia la info',self.reiniMultiple)
+                if self.reiniMultiple=='Nuevo' or len(self.dataMultiple['geo'])==0:
+                    if not data==None:
+                        self.dataMultiple['geo'].append([lista,labels,input_box,data])
+                    else:
+                        self.dataMultiple['geo'].append([lista,labels,input_box,[]])
+                else:
+                    #print('reinimultiple' ,self.reiniMultiple)
+                    if self.reiniMultiple=='Adicionar' and len(self.dataMultiple['geo'])>0:
+                        if len(self.dicpm[1])>0:
+                            #print('adicionar despues de procesado')
+                            #print(self.dataMultiple['geo'])
+                            puntos=self.dataMultiple['geo'][0][0]
+                            etiquetas=self.dataMultiple['geo'][0][1]
+                            for i in zip(lista,labels):
+                                puntos.append(i[0])
+                                etiquetas.append(i[1])
+                            self.dataMultiple['geo'][0][0]=puntos
+                            self.dataMultiple['geo'][0][1]=etiquetas
+                            #print('cambio',self.dataMultiple['geo'])
+                self.dicpm={0:[],1:[],'data':[]}
+                self.dicarm={1:[],'data':[]} 
+                self.reiniMultiple='Adicionar'
+        #elif len(self.dicarm[0])>0:
+        #print('data multiple',self.dataMultiple)
+        
+    def reini_cap_multi(self):
+        self.reiniMultiple='Nuevo'
+        self.cierreCapturaMultiple()
+        self.dicpm={0:[],1:[],'data':[]}
+        self.dicarm={1:[],'data':[]}
+    #-----------------------------------
     
-    #metodo ejecutado al hacer clic en el mapa
+    #metodo     ejecutado al hacer clic en el mapa
     def captar_punto(self,e):
         nlp=0
         ndp=0
+        conteom=0
 #        if self.npuntos.value()<=10:
         p= QgsPointXY(e[0],e[1])
         #verificamos los sistemas de coordenadas de ser necesario se realiza 
@@ -365,35 +581,68 @@ class dialog_digitalizacion(DialogUi, DialogType):
 #        sci='EPSG:2202'
         if sc == sci:
             geo=p
+        elif sci=='':#si la imagen no posee sistemas de coordenadas no transformamos
+            geo=p
         else:
             sc1=QgsCoordinateReferenceSystem(sc)
             sc2=QgsCoordinateReferenceSystem(sci)
             t=QgsCoordinateTransform(sc1,sc2,self.pry)
             rt=t.transform(p)
             geo=rt
-        if self.op_atrib.isChecked():
-            if self.listCVector.count()==0 or self.op_crear_campo.isChecked():
-                valor=self.valor.text()
-                ncampo=self.ncampo.text()
-                if ('crear',ncampo,valor) in self.dicPuntos:
-                    self.dicPuntos[('crear',ncampo,valor)].append(geo)
-                else:
-                    self.dicPuntos[('crear',ncampo,valor)]=[geo]
-            elif not self.op_crear_campo.isEnabled() or not self.op_crear_campo.isChecked():
-                if self.lcampos.isEnabled():
+        if self.opCaptura.isChecked()==False:#captura sencilla
+            self.cierreCapturaMultiple()#cerramos la captura multiple si hay eventos
+            if self.op_atrib.isChecked():
+                if self.listCVector.count()==0 or self.op_crear_campo.isChecked():
                     valor=self.valor.text()
-                    ncampo=self.lcampos.currentText()
-                    if ('campo',ncampo,valor) in self.dicPuntos:
-                        self.dicPuntos[('campo',ncampo,valor)].append(geo)
+                    ncampo=self.ncampo.text()
+                    if ('crear',ncampo,valor) in self.dicPuntos:
+                        self.dicPuntos[('crear',ncampo,valor)].append(geo)
                     else:
-                        self.dicPuntos[('campo',ncampo,valor)]=[geo]
-            #print('diccionario',self.dicPuntos)
-        elif not self.op_atrib.isChecked():
-            self.listPuntos.append(geo)
-            #print('lista',self.listPuntos)
+                        self.dicPuntos[('crear',ncampo,valor)]=[geo]
+                elif not self.op_crear_campo.isEnabled() or not self.op_crear_campo.isChecked():
+                    if self.lcampos.isEnabled():
+                        valor=self.valor.text()
+                        ncampo=self.lcampos.currentText()
+                        if ('campo',ncampo,valor) in self.dicPuntos:
+                            self.dicPuntos[('campo',ncampo,valor)].append(geo)
+                        else:
+                            self.dicPuntos[('campo',ncampo,valor)]=[geo]
+                #print('diccionario',self.dicPuntos)
+            elif not self.op_atrib.isChecked():
+                self.listPuntos.append(geo)
+        else:#multiples puntos por captura
+            #sumamos al contador si comienza la captura
+            #print(' self.capMulti',self.capMulti)
+            datos=None
+            if self.opPrompt.currentText()=='Adicionar a la selección':
+                tipo='positivo'
+            else:
+                tipo='negativo'
+             #almacenamos si no hay datos
+            if len(self.dicpm['data'])==0:
+                if self.op_atrib.isChecked():
+                    #crear el campo
+                    if self.listCVector.count()==0 or self.op_crear_campo.isChecked():
+                        valor=self.valor.text()
+                        ncampo=self.ncampo.text()
+                        datos=('crear',ncampo,valor)
+                    #guardar en campo existente
+                    elif not self.op_crear_campo.isEnabled() or not self.op_crear_campo.isChecked():
+                        if self.lcampos.isEnabled():
+                            valor=self.valor.text()
+                            ncampo=self.lcampos.currentText()
+                            datos=('campo',ncampo,valor)
+                    self.capturaMultiple(tipo,punto=geo,area=None,data=datos)
+                else:
+                    self.capturaMultiple(tipo,punto=geo,area=None,data=None)
+            else:
+                self.capturaMultiple(tipo,punto=geo,area=None,data=None)
+#            print('lista',self.listPuntos)
         #ajustamos el contador
         nlp=len(self.listPuntos)
         ndp=len(self.dicPuntos)
+        #print('lista y dic puntos normales',nlp,ndp)
+        self.npuntos.setValue(0)
         if ndp>0:
             c=0
             for i in self.dicPuntos:
@@ -404,6 +653,13 @@ class dialog_digitalizacion(DialogUi, DialogType):
             self.npuntos.setValue(nlp+self.npuntos.value())
         elif nlp>0 and ndp==0:
             self.npuntos.setValue(nlp)
+        if len(self.dataMultiple['geo'])>0:
+            self.npuntos.setValue(self.npuntos.value()+len(self.dataMultiple['geo']))
+        #print('marcar captura ini conteom',conteom,self.capMulti,len(self.dicpm[1]))
+#        if self.reiniMultiple=='Adicionar':
+        if len(self.dicpm[1])>0 or len(self.dicarm[1])>0:
+            self.npuntos.setValue(self.npuntos.value()+1)
+            
     
     def dibujarArea(self):
         if self.dibuArea==False:
@@ -432,9 +688,19 @@ class dialog_digitalizacion(DialogUi, DialogType):
     def cerrar(self):
         self.pry.layersWillBeRemoved.disconnect(self.capaRemovida)
         self.pry.layersAdded.disconnect(self.capaAdicionada)
+        try:
+            self.tool_punto.reset()#borramos el punto marcado en el canvas
+        except:
+            pass
         self.close()
+        
+    def liberarMemoria(self):
+        torch.cuda.empty_cache()
+        gc.collect()
                 
     def procesar(self):
+#        self.tool_punto.reset()#borramos el punto marcado en el canvas
+        self.liberarMemoria()
         progressMessageBar = self.iface.messageBar().createMessage("El proceso de carga tomara varios minutos...")
         progress = QProgressBar()
         progress.setMaximum(100)
@@ -457,6 +723,11 @@ class dialog_digitalizacion(DialogUi, DialogType):
         filas=self.param.filas
         geotransform=self.param.geotransform
         epsg=self.param.src.authid()
+        if epsg=='':
+#            print('entro en imagen no geo')
+            self.nogeo=True
+        else:
+            self.nogeo=False
         #procesamiento de puntos
         input_label=np.array([1])
         #estatus del proceso
@@ -471,10 +742,19 @@ class dialog_digitalizacion(DialogUi, DialogType):
             time.sleep(1)
             progressMessageBar.setText('Procesando seleccion por puntos')
             progress.setValue(20)
+            #print('lista puntos',self.listPuntos)
             for i in self.listPuntos:
                 coords=coord_pixel(geotransform,i.x(),i.y())
-                #print(' transformacion coordenadas imagen',coords) 
-                input_point=np.array([[coords[0], coords[1]]])
+#                print(' transformacion coordenadas imagen',coords) 
+                if self.nogeo:
+                    v1=coords[0]
+                    v2=coords[1]*-1
+#                    print('punto nogeo ',v1,v2)
+                    input_point=np.array([[v1, v2]])
+                else:
+                    coords=coord_pixel(geotransform,i.x(),i.y())
+                    input_point=np.array([[coords[0], coords[1]]])
+                #print('puntos norma',input_point)
                 if self.param.nombre=="tinyhq":
                     masks, scores, logits = predictor.predict(
                         point_coords=input_point,
@@ -497,7 +777,13 @@ class dialog_digitalizacion(DialogUi, DialogType):
                 dicImagenes[i]=[]
                 for c in da:
                     coords=coord_pixel(geotransform,c.x(),c.y())
-                    input_point=np.array([[coords[0], coords[1]]])
+                    if self.nogeo:
+                        v1=coords[0]
+                        v2=coords[1]*-1
+                        print('punto nogeo ',v1,v2)
+                        input_point=np.array([[v1, v2]])
+                    else:
+                        input_point=np.array([[coords[0], coords[1]]])
                     if self.param.nombre=="tinyhq":
                         masks, scores, logits = predictor.predict(
                             point_coords=input_point,
@@ -515,6 +801,7 @@ class dialog_digitalizacion(DialogUi, DialogType):
                     dicImagenes[i].append(listap)
             #print(dicImagenes)
         if len(self.listAreas)>0:
+            #print('lista areas',self.listAreas)
             time.sleep(1)
             progressMessageBar.setText('Procesando seleccion por areas')
             progress.setValue(30)
@@ -525,7 +812,14 @@ class dialog_digitalizacion(DialogUi, DialogType):
                 maxy=i.yMaximum()
                 p1=coord_pixel(geotransform,minx,maxy)
                 p2=coord_pixel(geotransform,maxx,miny)
-                input_box = np.array([p1[0], p1[1], p2[0], p2[1]])
+                if self.nogeo:
+                    v1x=p1[0]
+                    v1y=p1[1]*-1
+                    v2x=p2[0]
+                    v2y=p2[1]*-1
+                    input_box = np.array([v1x,v1y, v2x, v2y])
+                else:
+                    input_box = np.array([p1[0], p1[1], p2[0], p2[1]])
                 if self.param.nombre=="tinyhq":
                     masks, _, _ = predictor.predict(
                         point_coords=None,
@@ -558,8 +852,15 @@ class dialog_digitalizacion(DialogUi, DialogType):
                     miny=c.yMinimum()
                     maxy=c.yMaximum()
                     p1=coord_pixel(geotransform,minx,maxy)
-                    p2=coord_pixel(geotransform,maxx,miny)
-                    input_box = np.array([p1[0], p1[1], p2[0], p2[1]])
+                    p2=coord_pixel(geotransform,maxx,miny) 
+                    if self.nogeo:
+                        v1x=p1[0]
+                        v1y=p1[1]*-1
+                        v2x=p2[0]
+                        v2y=p2[1]*-1
+                        input_box = np.array([v1x,v1y, v2x, v2y])
+                    else:
+                        input_box = np.array([p1[0], p1[1], p2[0], p2[1]])
                     if self.param.nombre=="tinyhq":
                         masks, _, _ = predictor.predict(
                             point_coords=None,
@@ -578,6 +879,118 @@ class dialog_digitalizacion(DialogUi, DialogType):
                     listap=mask_to_imagen(masks,ruta_out,'areas_atrb',columnas,filas,wkt,geotransform)
                     dicImagenes[i].append(listap)
                     #print('dic imagenes',dicImagenes)
+        #PROCESAR CAPTURA MULTIPLE
+#        print('len(self.dicpm[1])',len(self.dicpm[1]))
+#        print('len(self.dicarm[1])',len(self.dicarm[1]))
+        if len(self.dicpm[1])>0 or len(self.dicarm[1])>0:
+            self.reini_cap_multi()
+        if len(self.dataMultiple['geo'])>0:
+            #inicializamos las variables pq pudieron cambiar en la siteraciones anteriores
+            input_box=None
+            input_point=None
+            labels=None
+            time.sleep(1)
+            progressMessageBar.setText('Procesando seleccion captura multiple')
+            progress.setValue(70)
+            for i in self.dataMultiple['geo']:
+                #print(i)
+                if len(i[2])>0:
+                    input_box=i[2]
+                    if self.nogeo:
+                        input_box[0][1]=input_box[0][1]*-1
+                        input_box[0][3]=input_box[0][3]*-1
+                else:
+                    input_box=None
+                if len(i[0])>0:
+                    input_point=np.array(i[0])
+                    if self.nogeo:
+                        input_point[0][1]=input_point[0][1]*-1
+                    labels=np.array(i[1])
+                else:
+                    input_point=None
+                    labels=None
+#                print('input_point',input_point)
+#                print('labels',labels)
+#                print('input_box',input_box,input_box.shape,input_box.ndim)
+                if self.param.nombre=="tinyhq":
+                    if not input_box is None:
+                        if len(input_box)>1:
+                            #print('multiples cajas tiny',input_box)
+                            masks, scores, logits = predictor.predict_torch(
+                                point_coords=None,
+                                point_labels=None,
+                                boxes=input_box,
+                                multimask_output=multiple,
+                                hq_token_only=False
+                            )
+                            self.iface.messageBar().pushMessage('ADVERTENCIA',\
+                            '<b>Con multiples areas no se consideran puntos de seleccion</b>', level=Qgis.Info, duration=7)
+                            masks=masks.cpu().numpy()
+                            masksl=[]
+                            for x in range(len(masks)):
+                                masksl.append(masks[x])
+                            masks=masksl
+                        else:
+                            masks, scores, logits = predictor.predict(
+                                point_coords=input_point,
+                                point_labels=labels,
+                                box=input_box,
+                                multimask_output=multiple,
+                                hq_token_only=False
+                            )
+#                            print(' mascara fast normal1',masks.sum(),len(masks),masks.shape)
+                    else:
+                        masks, scores, logits = predictor.predict(
+                            point_coords=input_point,
+                            point_labels=labels,
+                            box=input_box,
+                            multimask_output=multiple,
+                            hq_token_only=False
+                        )
+#                        print(' mascara fast normal2',len(masks),masks.shape)
+                elif self.param.nombre=="sam":
+                    #print(' tipo tensor',type(input_box))
+                    if not input_box is None:
+                        if len(input_box)>1:
+                            masks, scores, logits = predictor.predict_torch(
+                                point_coords=None,
+                                point_labels=None,
+                                boxes=input_box,
+                                multimask_output=multiple,
+                            )
+                            self.iface.messageBar().pushMessage('ADVERTENCIA',\
+                            '<b>Con multiples areas no se consideran puntos de seleccion</b>', level=Qgis.Info, duration=7)
+                            masks=masks.cpu().numpy()
+                            masksl=[]
+                            for x in range(len(masks)):
+                                masksl.append(masks[x])
+                            masks=masksl
+                            #print('a numpy',masks,len(masks),masks[0],masks[0].shape,masks[1],masks[1].shape)
+                        else:
+                            masks, scores, logits = predictor.predict(
+                                point_coords=input_point,
+                                point_labels=labels,
+                                box=input_box,
+                                multimask_output=multiple,
+                            )
+                    else:
+                        masks, scores, logits = predictor.predict(
+                            point_coords=input_point,
+                            point_labels=labels,
+                            box=input_box,
+                            multimask_output=multiple,
+                        )
+#                        print(' mascara normal',masks,len(masks),masks.shape)
+                #AQUI PROCESAMOS LOS ATRIBUTOS
+                if len(i[3])==0:
+                    listapm=mask_to_imagen(masks,ruta_out,'puntos',columnas,filas,wkt,geotransform)
+                    listImagenes.append(listapm)
+                elif len(i[3])>0:
+                    dicImagenes[i[3]]=[]
+                    listapm=mask_to_imagen(masks,ruta_out,'dipuntos',columnas,filas,wkt,geotransform)  
+                    dicImagenes[i[3]].append(listapm)
+            #inicializamos la captura multiple
+            #self.dataMultiple={'geo':[]}
         #print('mascara',masks,len(masks))
         #print('lista de imagenes antes de procesar' ,listImagenes)
         time.sleep(1)
@@ -629,31 +1042,42 @@ class dialog_digitalizacion(DialogUi, DialogType):
             #dependiendo del control se crea o se anaden a capa existente
             if self.op_capa.isChecked():
                 capa=self.listCVector.currentData()
-                cargar_capa_exist_mayor(capa,listcapas,epsg)
-                cargar_capa_exist_atrib_mayor(capa,diccapas,epsg)
+                cargar_capa_exist_mayor(capa,listcapas,epsg,self.iface)
+                cargar_capa_exist_atrib_mayor(capa,diccapas,epsg,self.iface)
+                if self.nogeo:
+                    inversion_vector(capa)
                 capa.triggerRepaint()
             else:
-                resultado=crear_capa_mayor_salida(listcapas,epsg)
+                resultado=crear_capa_mayor_salida(listcapas,epsg,self.iface)
                 if not resultado is None:
                     #print('resultado',type(resultado))
-                    cargar_capa_exist_atrib_mayor(resultado,diccapas,epsg)
+                    cargar_capa_exist_atrib_mayor(resultado,diccapas,epsg,self.iface)
                 else:
-                    resultado=crear_capa_mayor_atrib(diccapas,epsg)
+                    resultado=crear_capa_mayor_atrib(diccapas,epsg,self.iface)
+                    if self.nogeo:
+                        inversion_vector(resultado)
         else:
             #----------------------------------------------------------
             #dependiendo del control se crea o se anaden a capa existente
             if self.op_capa.isChecked():
                 capa=self.listCVector.currentData()
-                cargar_capa_exist(capa,listcapas,epsg,multi=multiple)
-                cargar_capa_exist_atrib(capa,diccapas,epsg)
+                cargar_capa_exist(capa,listcapas,epsg,self.iface,multi=multiple)
+                cargar_capa_exist_atrib(capa,diccapas,epsg,self.iface)
+                if self.nogeo:
+                    inversion_vector(capa)
                 capa.triggerRepaint()
             else:
-                resultado=crear_capa_salida(listcapas,epsg,multi=multiple)
+                resultado=crear_capa_salida(listcapas,epsg,self.iface,multi=multiple)
                 if not resultado is None:
-                    cargar_capa_exist_atrib(resultado,diccapas,epsg)
+                    cargar_capa_exist_atrib(resultado,diccapas,epsg,self.iface)
+                    if self.nogeo:
+                        inversion_vector(resultado)
                 else:
-                    resultado=crear_capa_atrib(diccapas,epsg)
+                    resultado=crear_capa_atrib(diccapas,epsg,self.iface)
+                    if self.nogeo:
+                        inversion_vector(resultado)
                     #print('resultado capa atrib',resultado)
+        
         #si creamos una nueva capa la cargamos
         if not self.op_capa.isChecked():
             self.pry.addMapLayer(resultado)
@@ -661,6 +1085,9 @@ class dialog_digitalizacion(DialogUi, DialogType):
         time.sleep(1)
         progress.setValue(100)
         self.iface.messageBar().clearWidgets()
+        self.liberarMemoria()
+        masks=None
+        listap=None
         #borrar imagenes temporales
         for i in listImagenes:
             try:

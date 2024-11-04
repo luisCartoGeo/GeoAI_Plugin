@@ -31,6 +31,7 @@ class ini_geoai:
         self.iface = iface
         #parametros del modelo. Se inician y se pasan vacios
         self.params=model_params()
+        self.firtsTime=False
 
     def initGui(self):
         self.dir = os.path.dirname(__file__)
@@ -84,8 +85,10 @@ class ini_geoai:
     def digitalizacion(self):
         listV=self.verificar_cargar_vector()
         if self.params.activo:
-            self.dlg=dialog_digitalizacion(self.iface,listV,self.params)
-            self.dlg.show()
+            if self.firtsTime==False:
+                self.dlgsi=dialog_digitalizacion(self.iface,listV,self.params)
+                self.firtsTime=True
+            self.dlgsi.show()
         else:
             self.iface.messageBar().pushMessage('ERROR',\
             '<b>Primero debe Pre-Cargar el Modelo/Imagen</b>', level=0, duration=7)
@@ -127,25 +130,27 @@ class ini_geoai:
             ms.setIcon(QMessageBox.Information)
             ms.exec()
         else:
-            self.dlg=dialog_precarga(self.iface,self.listR,self.params)
-            self.dlg.show()
+            self.dlgpre=dialog_precarga(self.iface,self.listR,self.params)
+            self.dlgpre.show()
             
     def segmenti(self):
-        if self.params.activo and self.params.nombre=="sam":
-            self.dlg=dialog_segmentar_i(self.iface,self.params)
+        self.verificar_cargar_raster()
+        print(len(self.listR))
+        if len(self.listR)>0:
+            self.dlg=dialog_segmentar_i(self.iface,self.listR)
             self.dlg.show()
-        else:
-            if self.params.activo==False:
-                self.iface.messageBar().pushMessage('ERROR',\
-                '<b>Primero debe Pre-Cargar el Modelo/Imagen</b>', level=0, duration=7)
-                ms = QMessageBox()
-                ms.setText("Primero debe Pre-Cargar el Modelo/Imagen. Ejecute Pre-Carga")
-                ms.setIcon(QMessageBox.Information)
-                ms.exec()
-            elif self.params.nombre=="tinyhq":
-                self.iface.messageBar().pushMessage('ERROR',\
-                '<b>El modelo HQ Ligero no se puede utilizar con esta opción</b>', level=0, duration=7)
-                ms = QMessageBox()
-                ms.setText("El modelo HQ Ligero no se puede utilizar con esta opción")
-                ms.setIcon(QMessageBox.Information)
-                ms.exec()
+#        else:
+#            if self.params.activo==False:
+#                self.iface.messageBar().pushMessage('ERROR',\
+#                '<b>Primero debe Pre-Cargar el Modelo/Imagen</b>', level=0, duration=7)
+#                ms = QMessageBox()
+#                ms.setText("Primero debe Pre-Cargar el Modelo/Imagen. Ejecute Pre-Carga")
+#                ms.setIcon(QMessageBox.Information)
+#                ms.exec()
+#            elif self.params.nombre=="tinyhq":
+#                self.iface.messageBar().pushMessage('ERROR',\
+#                '<b>El modelo HQ Ligero no se puede utilizar con esta opción</b>', level=0, duration=7)
+#                ms = QMessageBox()
+#                ms.setText("El modelo HQ Ligero no se puede utilizar con esta opción")
+#                ms.setIcon(QMessageBox.Information)
+#                ms.exec()
